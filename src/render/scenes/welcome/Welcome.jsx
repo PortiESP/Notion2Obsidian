@@ -1,10 +1,9 @@
 import sass from "./Welcome.module.scss"
+import po from "@/components/postOffice"
 
-
-export default function Welcome(){
+export default function Welcome(props){
     
-    const {ipcRenderer} = require("electron")
-    const click = () => ipcRenderer.send("debug", "test msg")
+    const click = () => po("debug", "test")
 
     return (<div className={sass.div__welcome_wrap}>
         <div className={sass.div__information}>
