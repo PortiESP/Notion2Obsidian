@@ -1,0 +1,50 @@
+{
+  "name": "notion2obsidian",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "main": "src/electron/main.cjs",
+  "scripts": {
+    "dev": "vite",
+    "devapp": "cmd /C \"electron .\"",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "electron-is-dev": "^2.0.0",
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "@vitejs/plugin-react": "^3.1.0",
+    "electron": "^24.1.2",
+    "sass": "^1.62.0",
+    "typescript": "^4.9.3",
+    "vite": "^4.2.0"
+  },
+  "build": {
+    "appId": "notion-2-obsidian",
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
+    "files": [
+      "dist/**/*",
+      "src/electron/main.cjs",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "nsis": {
+      "uninstallDisplayName": "Uninstall App",
+      "oneClick": "false",
+      "allowToChangeInstallationDirectory": "true"
+    },
+    "directories": {
+      "output": "releases",
+      "buildResources": "dist"
+    }
+  }
+}

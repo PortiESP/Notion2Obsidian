@@ -1,0 +1,41 @@
+@import "../identity";
+
+.div__welcome_wrap{
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap:40px;
+}
+
+.div__information{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap:10px;
+
+    color: $white;
+
+    & h1{font-size: 2em;}
+    & p>i{font-size: .9em; color: $gray}
+}
+
+.button__continue{
+    padding: 10px 20px;
+
+    font-weight: 500;
+    font-size: 1.1em;
+
+    background: $purple;
+    border: 2px solid $purple;
+    color: $darkwhite;
+    border-radius: 10px;
+
+    &:hover{
+        background-color: $purple;
+        color: $white;
+    }
+}

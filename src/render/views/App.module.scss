@@ -1,0 +1,28 @@
+
+.app{
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.div__header{   
+    height: 80px;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 20px;
+
+    background-color: #111;
+    color: #eee;
+}
+.div__body{
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    background-color: #333;
+}
