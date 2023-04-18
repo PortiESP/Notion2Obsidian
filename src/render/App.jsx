@@ -6,6 +6,7 @@ import po from "@/components/postOffice"
 import Welcome from '@/scenes/welcome/Welcome.jsx'
 import Information from '@/scenes/information/Information.jsx'
 import Path_selection from '@/scenes/path_selection/Path_selection.jsx'
+import ToolSetup from '@/scenes/tool_setup/Tool_setup.jsx'
 
 function App() {
 
@@ -16,21 +17,51 @@ function App() {
     po("checkPath", exportPath, (res)=> setIsPathValid(res))
   }, [exportPath])
 
+  // Tool Setup options
+  const [setupOptions, setSetupOptions] = useState({
+    nameHash: true,
+    moveToFolder: true,
+    wikilinks: true,
+    asterisks: true,
+    callouts: true,
+    missing: true,
+    genListFiles: true,
+    listNamePrefix: "",
+    listNameSufix: "",
+    metadata: true,
+  })
+  const tips = {
+    nameHash: "Remove the hashes from all of the directories and and files name (but not form the references inside the files)",
+    moveToFolder: "If a file is at the same path of a directory with the same name, move the file into that directory",
+    wikilinks: "Convert the clasic Markdown URLs and Images into Wikilinks format",
+    asterisks: "Remove repeated asterisks from bold stings",
+    callouts: "Convert Notion callouts to Obsidian callouts format",
+    missing: "Generate a file with the path of the missing databases (File is empty and with name 'Untitled Database.md')",
+    genListFiles: "Generate a list '.md' file based on the data of the '.svg' files using the Dataview plugin. IMPORTANT: you must have the plugin installed with the JavaScript Queries enabled ",
+    listNamePrefix: "Allows the user to add a prefix to the generated list file (previous checkbox) so it may be easyer to difference from normal notes in the explorer",
+    listNameSufix: "Same as the prefix, but add at the end of the filename",
+    metadata: true,
+  }
+  useEffect(()=>{
+    console.log(setupOptions)
+  }, [setupOptions])
+  
   // Scene manager
-  const [scene, setScene] = useState(0)  // Initial scene
+  const [scene, setScene] = useState(3)  // Initial scene
   const [isPathValid, setIsPathValid] = useState(false)  // Hold if selected path does not exist
 
   // Scene list
   const sceneList = [
-      <Welcome setScene={setScene}/>,  // Welcome scene
-      <Information setScene={setScene}/>,  // Information and License
-      <Path_selection setScene={setScene} exportPath={exportPath} setExportPath={setExportPath} isPathValid={isPathValid} setIsPathValid={setIsPathValid}/>,  // Choose the export file path
+      <Welcome/>,  // Welcome scene
+      <Information/>,  // Information and License
+      <Path_selection exportPath={exportPath} setExportPath={setExportPath} isPathValid={isPathValid} setIsPathValid={setIsPathValid}/>,  // Choose the export file path
+      <ToolSetup setupOptions={setupOptions} setSetupOptions={setSetupOptions} tips={tips}/>,  // Tool setup: Select the scripts and othe stuff
     ]
 
   // Check requirements to press `continue` button
   function checkReqs(){
     if (scene === 2 && isPathValid === false) return false  // Check if path is valid to move from scene 2
-    else return true
+    else return true  // If any condition is matched...
   }
 
   return (

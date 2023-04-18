@@ -1,7 +1,7 @@
 import postOffice from "../../components/postOffice"
 import sass from "./Information.module.scss"
 
-export default function Information(props){
+export default function Information(){
 
     return (<div className={sass.div__information_wrap}>
 

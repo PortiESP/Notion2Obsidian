@@ -1,7 +1,7 @@
 import sass from "./Welcome.module.scss"
 
 
-export default function Welcome(props){
+export default function Welcome(){
     
     return (<div className={sass.div__welcome_wrap}>
         <div className={sass.div__information}>

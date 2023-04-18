@@ -21,18 +21,19 @@
     align-items: center;
     gap: 20px;
     color: $darkwhite;
-
+    
     & p{
         text-align: center;
         font-size: 1.2em;
     }    
-
+    
 }
 
 
 
 .div__form{
     width: 80%;
+    max-width: 900px;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -65,10 +66,3 @@
 
 
 
-.callout{
-    padding: 10px 20px;
-    border-radius: 10px;
-    background: $purple;
-    color: $white;
-    font-weight: 500;
-}
