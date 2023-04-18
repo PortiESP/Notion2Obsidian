@@ -1,3 +1,4 @@
+@import "scenes/identity";
 
 .app{
     position: relative;
@@ -23,6 +24,48 @@
     position: relative;
     width: 100%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
     background-color: #333;
+}
+
+.div__scene_wrap{
+    position: relative;
+    height: 80%;
+    width: 100%;
+}
+.div__buttons_wrap{
+    height: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+
+    & .button__nav{
+        padding: 10px 20px;
+    
+        font-weight: 500;
+        font-size: 1.1em;
+    
+        background: $purple;
+        border: 2px solid $lightpurple;
+        color: $white;
+        border-radius: 10px;
+        
+        &:hover{
+            border-color: $purple;
+        }
+        
+        &.button__nav_back{
+            background-color: transparent;
+            border-color: $lightpurple;
+            &:hover{
+                background: $purple;
+                border-color: $purple;
+            }
+            
+        }
+    }
 }

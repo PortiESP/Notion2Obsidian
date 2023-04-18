@@ -3,3 +3,26 @@ $lightpurple: #a882ff;
 $white: #eee;
 $darkwhite: #d8d8d8;
 $gray: #aaa;
+
+
+.title{
+    color: $white;
+    font-size: 2em;
+}
+
+.a{
+    color: $lightpurple;
+    text-decoration: underline;
+    font-style: italic;
+    font-size: .92em;
+    cursor: pointer;
+    &:hover{
+        color: $purple;
+    }
+}
+
+.b{
+    font-weight: 500;
+    color: $darkwhite;
+    font-size: .92em;
+}

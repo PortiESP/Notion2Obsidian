@@ -1,0 +1,74 @@
+@import "../identity";
+
+
+.div__pathselection_wrap{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+
+}
+
+
+.div__info{
+    width: 80%;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    color: $darkwhite;
+
+    & p{
+        text-align: center;
+        font-size: 1.2em;
+    }    
+
+}
+
+
+
+.div__form{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    
+    & input{
+        width: 100%;
+        padding: 10px 30px;
+        border-radius: 10px;
+        border:2px solid $lightpurple;
+        background: transparent;
+        color: $white;
+        
+        &:hover{
+            filter: brightness(120%);
+        }
+        &:active, &:focus{
+            border-color: $purple;
+            outline: none;
+        }
+    }
+    
+    & .span__path{
+        text-align: center;
+        font-style: italic;
+        color: #888a;
+    }
+
+}
+
+
+
+
+.callout{
+    padding: 10px 20px;
+    border-radius: 10px;
+    background: $purple;
+    color: $white;
+    font-weight: 500;
+}
