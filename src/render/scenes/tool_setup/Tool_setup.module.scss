@@ -21,6 +21,15 @@
     max-width: 900px;
     overflow-y: scroll;
       
+    
+    padding: 40px;
+    border: 2px solid $purple;
+    border-radius: 10px;
+    
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
     /* Estilos para la barra de scroll personalizada */
     &::-webkit-scrollbar {
     width: 20px;
@@ -38,15 +47,7 @@
     border-radius: 10px;
     }
 
-    padding: 40px;
-    border: 2px solid $purple;
-    border-radius: 10px;
-
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-
-    & > p{
+    & > .tip{
         color: #aaa;
         padding: 10px 0;
         border-bottom: 2px solid #888;
@@ -60,5 +61,74 @@
         display: flex;
         gap: 10px;
         align-items: center;
+
+        &.div__subitem{
+            margin-left: 20px;
+        }
     }
+    & .div__input_name_wrap{
+        color: $gray;
+        padding: 10px 0;
+        margin-left: 20px;
+        padding-left: 10px;
+        border-left: 2px solid #666;
+        
+        
+        & .div__input_name {
+            padding: 10px 0 20px;
+            & input{
+                font-size: .9em;
+                background: none;
+                border: 1px solid #fff1;
+                color: $gray;
+                padding: 2px 4px;
+
+                &:focus{
+                    outline: none;
+                }
+            }
+            & span{
+                color: $gray;
+                font-size: .9em;
+            }
+        }
+    } 
+
+    & h2{
+        color: $white;
+        font-size: 1.4em;
+        padding: 10px;
+        border-bottom: 2px solid #444;
+    }
+
+    & .labelMsg{
+        font-style: italic;
+        color: #888;
+        font-size: .9em;
+    }
+
+    & > p{
+        color: $gray;
+    }
+}
+
+
+.code{
+    font-family: monospace;
+    padding: 2px 6px;
+    background: #585858;
+    color: #c78100;
+    border-radius: 6px;
+}
+
+.example{
+    & *{
+        font-size: .8em;
+    }
+    margin-left: 20px;
+    padding-left: 10px;
+    border-left: 2px solid #666;
+
+    
+    filter: brightness(80%);
 }
