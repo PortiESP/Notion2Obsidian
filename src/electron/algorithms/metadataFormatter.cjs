@@ -5,17 +5,19 @@ const path = require('path');
 /**
  * Fetch the CSV files and parse all of them
  *
- * @param {string} csvPath - The path of the CSV file of the list to format its items files
- * @param {string} errorLogPath - The path where to output the errors
- */
-module.exports = function formatMetadataOfListItems(basename, errorLogPath, debug=true){
-
-  const csv_files = searchFilesByExtension(basename, ".csv"); // Search for CSV files in the folder
-
+ * @param {string} dirPath - The path of the CSV file of the list to format its items files
+ * @param {string} debug - Flag to enable console logs
+*/
+module.exports = function formatMetadataOfListItems(dirPath, debug=true){
+  
+  const csv_files = searchFilesByExtension(dirPath, ".csv"); // Search for CSV files in the folder
+  const errorLog = []
+  
   for (file of csv_files){
-    processCSVFile(file, errorLogPath); // Process each found CSV file
+    errorLog.push(...processCSVFile(file, debug)); // Process each found CSV file
   }
-
+  
+  return errorLog;
 }
 
 
@@ -23,26 +25,34 @@ module.exports = function formatMetadataOfListItems(basename, errorLogPath, debu
  * Wraps the metadata of a MD file between '---'
  *
  * @param {string} csvPath - The path of the CSV file of the list to format its items files
- * @param {string} errorLogPath - The path where to output the errors
- */
-function processCSVFile(csvPath, errorLogPath) {
+ * @param {string} debug - Flag to enable console logs
+*/
+function processCSVFile(csvPath, debug=true) {
 
   const listPath = path.dirname(csvPath); // Get the folder path of the CSV file
+  const errors = []
 
   // Read the contents of the CSV file and format it
-  const csvContent = fs.readFileSync(csvPath, 'utf8').replaceAll(/["\r]/g, "").replaceAll(/[\/\\]/g, "|");
+  const csvContent = fs.readFileSync(csvPath, 'utf8').replaceAll(/["\r]/g, "")
   const rows = csvContent.split('\n');
   const data = rows.slice(1).map(row => row.split(','));
 
   for (let row of data) {
 
     // Get the Markdown file name and row content
-    const mdName = row[0].trim() + '.md';
+    // Remove characters that notion doesnt allow in the exported names
+    const mdBasename = row[0].trim().replaceAll(/:/g, "").replaceAll(/[\.\/\\\|]/g, " ");
+    const mdName = mdBasename + '.md';
 
     // Get the full path of the Markdown file
-    let mdPath = path.join(listPath, row[0]);
+    let mdPath = path.join(listPath, mdBasename);
     // Check if there are MD files that are not in a folder
-    if (!fs.existsSync(mdPath)) mdPath = path.join(listPath, mdName);
+    if (fs.existsSync(mdPath)){  // If a folder matched the `mdName`
+      mdPath = path.join(mdPath, mdName);
+    } else {  // If md name is at the same level
+      mdPath += ".md";
+    }
+
 
     // Check if the Markdown file path exists
     if (fs.existsSync(mdPath) && fs.statSync(mdPath).isFile()) {
@@ -69,20 +79,20 @@ function processCSVFile(csvPath, errorLogPath) {
         mdLines= [metadaBuffer, ...mdLines];  // Appening to de file at the first line
         fs.writeFileSync(mdPath, mdLines.join('\n'));  // Write to the file
 
-        if (debug) console.log(`Metadata added in Markdown file: ${mdName}`);
+        if (debug) console.log(`[+] Metadata added in Markdown file: ${mdName}`);
          
       } else {
-        if (debug) console.log(`No changes in: ${mdName}`);
+        if (debug) console.log(`[i] No changes in: ${mdName}`);
       }
 
     } else {
-      if (debug) console.log(`Markdown file ${mdName} does not exist. Recording in the log file.`);
+      if (debug) console.log(`[x] Markdown file "${mdName}" does not exist.`);
       // Log to error log file
-      fs.appendFileSync(errorLogPath, `[File not found]: ${mdPath}\n`);
+      errors.push("File not found: " + mdPath)
     }
   }
 
-  if (debug) console.log('Process completed successfully!');
+  return errors;
 }
 
 /**
@@ -111,7 +121,7 @@ function searchFilesByExtension(directoryPath, extension) {
       }
     });
   }
-
+  
   searchRecursively(directoryPath);
 
   return results;

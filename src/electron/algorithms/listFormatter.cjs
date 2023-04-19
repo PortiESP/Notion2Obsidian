@@ -6,14 +6,16 @@ const path = require('path');
  * with the data from the SVG
  *
  * @param {string} directoryPath - The path of the directory to start the search from
- * @param {string} errorLogPath - The file path where the error log should be written. Any errors that occur during execution will be appended to this file.
  * @param {Object} nameFormat - An optional object that specifies the format of the output MD file names. It has two properties:
  *   @param {string} nameFormat.prefix - An optional prefix string to be added to the base name of the CSV file when creating the MD file. Default is an empty string.
  *   @param {string} nameFormat.sufix - An optional suffix string to be added to the base name of the CSV file when creating the MD file. Default is an empty string.
  * @param {boolean} debug - An optional boolean flag that determines whether to enable debug mode or not. When set to true, debug information will be printed to the console. Default is false.
  *
  */
-module.exports = function processCSVFiles(directoryPath, errorLogPath, nameFormat={prefix:"", sufix:""}, debug = false) {
+module.exports = function listFormatter(directoryPath, nameFormat={prefix:"", sufix:""}, debug=false) {
+
+  const errorLog = []
+
   // Array to store CSV files found
   const csvFiles = searchFilesByExtension(directoryPath, ".csv");
 
@@ -47,14 +49,19 @@ module.exports = function processCSVFiles(directoryPath, errorLogPath, nameForma
         .map(e => [e.file.link, ${metatagsStr.replaceAll("\r", "").replaceAll(" ", "_")}]))\n\`\`\``.replaceAll("\r", "");
 
       fs.writeFileSync(mdFile, content, 'utf8');
+      
+      if (debug) `[+] New list created: ` + csvFile;
+
     } catch (err) {
       // Log any errors that occur during execution to the error log file
-      fs.appendFileSync(errorLogPath, `Error: ${err}\n`, 'utf8');
-      if (debug) console.error(err);
+      errorLog.push({file: csvFile, error: err.message});
+      if (debug) `[x] Error: err.message`;
     }
   }
 
-  if (debug) console.log('MD files created successfully!');
+  if (debug) console.log('[i] MD files created successfully!');
+
+  return errorLog;
 }
 
 /**

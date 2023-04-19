@@ -5,12 +5,13 @@ const path = require('path');
  * Move files to matching folder.
  *
  * @param {string} folderPath - The path of the folder to process.
- * @param {string} errorLogPath - The path of the error log file.
  * @param {boolean} debug - Flag to enable/disable debug mode.
  */
-module.exports = function moveFilesToMatchingFolder(folderPath, errorLogPath, debug) {
+module.exports = function moveFilesToMatchingFolder(folderPath, debug) {
     // Get all files in the specified folder and its subfolders
     const files = getAllFiles(folderPath);
+    // Error log list
+    const errorLog = []
 
     // Loop through each file
     files.forEach(file => {
@@ -23,14 +24,16 @@ module.exports = function moveFilesToMatchingFolder(folderPath, errorLogPath, de
                 const newFilePath = path.join(destinationFolder, newFileName); // Get the new file path
                 fs.renameSync(file.path, newFilePath); // Move the file to the destination folder
                 if (debug) {
-                    console.log(`File moved: ${file.path} --> ${newFilePath}`);
+                    console.log(`[+] File moved: ${file.path} --> ${newFilePath}`);
                 }
             } catch (err) {
-                console.error(`Error renaming file: ${file.path} - ${err.message}`);
-                logError(errorLogPath, `Original file: ${file.path} - Error: ${err.message}`);
+                if (debug) console.error(`[x] Error renaming file: ${file.path} - ${err.message}`);
+                errorLog.push({file: file.path, error: err.message});
             }
         }
     });
+
+    return errorLog;
 }
 
 /**
@@ -58,15 +61,5 @@ function getAllFiles(dirPath, arrayOfFiles = []) {
     });
 
     return arrayOfFiles;
-}
-
-/**
- * Log error message to error log file.
- *
- * @param {string} errorLogPath - The path of the error log file.
- * @param {string} errorMessage - The error message to log.
- */
-function logError(errorLogPath, errorMessage) {
-    fs.appendFileSync(errorLogPath, `${errorMessage}\n`);
 }
 

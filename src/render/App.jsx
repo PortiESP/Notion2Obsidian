@@ -16,7 +16,7 @@ function App() {
   const [exportPath, setExportPath] = useState("")  // Path introduced by the user
   // Checking if path is valid on changes
   useEffect(()=>{
-    po("checkPath", exportPath, (res)=> setIsPathValid(res))
+    po("check-path", exportPath, (res)=> setIsPathValid(res))
   }, [exportPath])
 
   // Tool Setup options
@@ -61,7 +61,7 @@ function App() {
       <Information/>,  // Information and License
       <Path_selection exportPath={exportPath} setExportPath={setExportPath} isPathValid={isPathValid}/>,  // Choose the export file path
       <ToolSetup setupOptions={setupOptions} setSetupOptions={setSetupOptions} tips={tips}/>,  // Tool setup: Select the scripts and othe stuff
-      <RunScripts setupOptions={setupOptions}/>,  // Loading screen
+      <RunScripts setupOptions={setupOptions} exportPath={exportPath}/>,  // Loading screen
     ]
 
   return (

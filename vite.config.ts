@@ -13,6 +13,7 @@ export default defineConfig({
     alias: {
       '@/components': "/src/render/components",
       '@/scenes': "/src/render/scenes",
+      '@/algorithms': "/src/electron/algorithms",
     },
   },
 })
