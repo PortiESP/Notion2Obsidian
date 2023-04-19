@@ -1,9 +1,8 @@
 import sass from "./Path_selection.module.scss"
 
-export default function Path_selection(props){
+export default function Path_selection({isPathValid, exportPath, setExportPath}){
 
-    // Extract props
-    const {isPathValid, exportPath, setExportPath} = props
+    console.log(isPathValid)
 
     return (<div className={sass.div__pathselection_wrap}>
         <h1 className={sass.title}>🗃️Path Selection🗃️</h1>
@@ -13,12 +12,12 @@ export default function Path_selection(props){
         <div className={sass.div__form}>
             <input 
                 type="text" 
-                className={sass.input__file} 
+                className={[sass.input__file, isPathValid && sass.valid].join(" ")} 
                 value={exportPath}
                 onChange={e => setExportPath(e.target.value.replaceAll("\\", "/"))}
                 placeholder="📁Select folder path..."
             />
-            <span className={sass.span__path}>{isPathValid ? "Valid path..." : "Invalid path..."}</span>
+            <span className={sass.span__path}>{isPathValid ? "" : "Path not found in the system..."}</span>
         </div>
     </div>)
 }
