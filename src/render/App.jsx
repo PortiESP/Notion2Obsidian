@@ -27,10 +27,11 @@ function App() {
     callouts: true,
     missing: true,
     genListFiles: true,
-    listNamePrefix: "LIST__",
+    listNamePrefix: "@LIST@__",
     listNameSufix: "",
     metadata: true,
   })
+  
   const tips = {
     nameHash: "Remove the hashes from all of the directories and and files name (but not form the references inside the files)",
     moveToFolder: "If a file is at the same path of a directory with the same name, move the file into that directory",

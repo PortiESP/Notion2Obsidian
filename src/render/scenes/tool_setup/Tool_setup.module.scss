@@ -7,7 +7,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 50px;
+    gap: 20px;
+    padding: 10px 0;
 }
 
 .div__info{
@@ -77,17 +78,19 @@
         & .div__input_name {
             padding: 10px 0 20px;
             & input{
+                font-family: monospace;
                 font-size: .9em;
                 background: none;
                 border: 1px solid #fff1;
                 color: $gray;
                 padding: 2px 4px;
-
+                
                 &:focus{
                     outline: none;
                 }
             }
             & span{
+                font-family: monospace;
                 color: $gray;
                 font-size: .9em;
             }

@@ -42,8 +42,8 @@ export default function Setup(props){
                 <input type="checkbox" onChange={()=> props.setSetupOptions(old => {return {...old, wikilinks:!old.wikilinks}})} checked={props.setupOptions.wikilinks} id="ck--wikilinks"/>
                 <label htmlFor="ck--wikilinks">Format URL/Img as Wikilinks </label>
             </div>
-            <div className={[sass.div__item, sass.div__subitem].join(" ")} title={props.tips.wikilinksComments}>
-                <input type="checkbox" onChange={()=> props.setSetupOptions(old => {return {...old, wikilinksComments:!old.wikilinksComments}})} checked={props.setupOptions.wikilinks && props.setupOptions.wikilinksComments} id="ck--wikilinks-comments"/>
+            <div className={[sass.div__item, sass.div__subitem, !props.setupOptions.wikilinks && sass.disabled].join(" ")} title={props.tips.wikilinksComments}>
+                <input type="checkbox" onChange={()=> props.setSetupOptions(old => {return {...old, wikilinksComments:!old.wikilinksComments}})} checked={props.setupOptions.wikilinks && props.setupOptions.wikilinksComments} id="ck--wikilinks-comments" disabled={!props.setupOptions.wikilinks}/>
                 <label htmlFor="ck--wikilinks-comments">Keep original URLs as Obsidian MD comment</label>
             </div>
             { props.setupOptions.wikilinks && <p className={sass.example}><span className={sass.code}>![Alt text](https://...)</span> as <span className={sass.code}>![[Alt text]]{props.setupOptions.wikilinksComments && " %% https://..."}</span></p>}
@@ -73,7 +73,7 @@ export default function Setup(props){
                 props.setupOptions.genListFiles &&
 
                 <div className={sass.div__input_name_wrap}>
-                    <label>Add a prefix/sufix to the generated list file: </label>
+                    <label>Add a prefix/sufix to the generated list file <span className={sass.labelMsg}>(Add a number or a symbol to make the file standout at the beggining of the directoy)</span></label>
                     <div className={sass.div__input_name}>
                         <input type="text" onChange={ e => props.setSetupOptions(old => {return {...old, listNamePrefix:e.target.value}})} value={props.setupOptions.listNamePrefix} placeholder="Prefix" title={props.tips.listNamePrefix}/>
                         <span> + filename + </span>
