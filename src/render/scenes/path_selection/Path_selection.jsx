@@ -2,7 +2,7 @@ import sass from "./Path_selection.module.scss"
 
 export default function Path_selection({isPathValid, exportPath, setExportPath}){
 
-    console.log(isPathValid)
+    console.log("Is path valid: ", isPathValid)
 
     return (<div className={sass.div__pathselection_wrap}>
         <h1 className={sass.title}>🗃️Path Selection🗃️</h1>

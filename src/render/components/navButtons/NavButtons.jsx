@@ -9,10 +9,11 @@ export default function NavButtons({scene, setScene, isPathValid}){
     }
 
     const btnBackNames = ["", "Back", "Back", "Back", "", ""]
-    const btnContNames = ["Continue", "Continue", "Continue", "Convert", "Finish"]
+    const btnContNames = ["Continue", "Continue", "Continue", "Convert", "View results", "Finish"]
 
     return (<>
         <div className={sass.div__buttons_wrap}>
+            {/*-1*/}<button className={sass.button__nav} onClick={()=>setScene(old=> old-1)}>-1</button>
             {/*BACK*/}{ btnBackNames[scene] && <button className={[sass.button__nav, sass.button__nav_back].join(" ")} onClick={()=>setScene(old=>old-1)}>{btnBackNames[scene]}</button>}
             {/*CONTINUE*/}<button className={sass.button__nav} onClick={()=>checkReqs() && setScene(old=> old+1)} disabled={!checkReqs()}>{btnContNames[scene]}</button>
             {/*+1*/}<button className={sass.button__nav} onClick={()=>setScene(old=> old+1)}>+1</button>

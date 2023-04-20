@@ -16,7 +16,7 @@ function App() {
   const [exportPath, setExportPath] = useState("C:/Users/Porti/Desktop/CONVERT/Export-9f787dd1-7f28-4ead-9fa1-421bbef21fbf")  // Path introduced by the user
   // Checking if path is valid on changes
   useEffect(()=>{
-    postOfficeSendCBK("check-path", exportPath, (e, res)=> setIsPathValid(res))
+    postOfficeSendCBK("check-path", exportPath, (res)=> setIsPathValid(res))
   }, [exportPath])
 
   // Tool Setup options
