@@ -8,7 +8,7 @@ export default function Setup(props){
     return (<div className={sass.div__setup_wrap}>
         <h1 className={sass.title}>🧰Converter Setup🧰</h1>
         <div className={sass.div__info}>
-            <p className={sass.callout}>Here you can select some additional options for your conversion</p>
+            <p className={sass.callout}>Here you can select some additional options for your conversion, some of this options are required, others are optional</p>
         </div>
         <div className={sass.div__form}>
             <p className={sass.tip}><i>TIP: Hover on each option to read more about what it does</i></p>
@@ -18,13 +18,13 @@ export default function Setup(props){
             <h2>Restructure export</h2>
 
             <div className={sass.div__item} title={props.tips.nameHash}>
-                <input type="checkbox" onChange={()=> props.setSetupOptions(old => {return {...old, nameHash:!old.nameHash}})} checked={props.setupOptions.nameHash} id="ck--name-hash"/>
+                <input type="checkbox" disabled onChange={()=> props.setSetupOptions(old => {return {...old, nameHash:!old.nameHash}})} checked={props.setupOptions.nameHash} id="ck--name-hash"/>
                 <label htmlFor="ck--name-hash">String hash from file names </label>
             </div>
             { props.setupOptions.nameHash && <p className={sass.example}><span className={sass.code}>myNote b6d4gh6gh46dr4vzx328u8u.md</span> as <span className={sass.code}>myNote.md</span></p>}
 
             <div className={sass.div__item} title={props.tips.moveToFolder}>
-                <input type="checkbox" onChange={()=> props.setSetupOptions(old => {return {...old, moveToFolder:!old.moveToFolder}})} checked={props.setupOptions.moveToFolder} id="ck--move-to-folder"/>
+                <input type="checkbox" disabled onChange={()=> props.setSetupOptions(old => {return {...old, moveToFolder:!old.moveToFolder}})} checked={props.setupOptions.moveToFolder} id="ck--move-to-folder"/>
                 <label htmlFor="ck--move-to-folder">Move files to folder with its name </label>
             </div>
             { props.setupOptions.moveToFolder && <p className={sass.example}><span className={sass.code}>./myNote.md</span> moved to <span className={sass.code}>./myNote/myNote.md</span></p>}

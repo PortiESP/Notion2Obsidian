@@ -85,6 +85,8 @@ function runScripts(e, options){
     }
 
     console.log("Running scripts: ", options)
+
+    /* !!! The order in which the scripts are runned matters, some scripts assume that others where run before them */
     
     if (options.nameHash){
         e.sender.send("response-script-status", "Renaming files and folders...")
@@ -101,12 +103,6 @@ function runScripts(e, options){
     if (options.moveToFolder){
         e.sender.send("response-script-status", "Moving files to matching folder...")
         results.moveToFolder = moveFilesToMatchingFolder(options.exportPath, true)
-        e.sender.send("response-script-status", true)
-    }
-    
-    if (options.wikilinks){
-        e.sender.send("response-script-status", "Formating URLs as wikilinks format...")
-        results.wikilinks = urlFormatter(options.exportPath, true, {prefix: options.listNamePrefix, sufix: options.listNameSufix}, true)
         e.sender.send("response-script-status", true)
     }
     
@@ -134,9 +130,14 @@ function runScripts(e, options){
         e.sender.send("response-script-status", true)
     }
 
-       
+    if (options.wikilinks){
+        e.sender.send("response-script-status", "Formating URLs as wikilinks format...")
+        results.wikilinks = urlFormatter(options.exportPath, true, {prefix: options.listNamePrefix, sufix: options.listNameSufix}, true)
+        e.sender.send("response-script-status", true)
+    }
+    
     e.sender.send("response-script-status", results)
-
+    
 }
 
 

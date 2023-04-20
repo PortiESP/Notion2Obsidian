@@ -31,13 +31,15 @@ module.exports = function urlFormatter(baseFolderPath, commentOriginal=true, nam
         // Perform pattern replacement in the file content
         const newContent = content.replace(/(!?)\[(.+?)\]\(([^)]+\.(.+))\)/g, (match, g1, g2, g3, g4)=>{
 
-          const isList = targetFiles.includes(`${path.dirname(file)}\\${g2}.md`) || targetFiles.includes(`${path.dirname(file)}\\${g2}\\${g2}.md`)
           let {prefix, sufix} = nameDecoration
-          prefix = isList&&prefix?prefix:""
-          sufix = isList&&sufix?sufix:""
+          prefix = prefix?prefix:""
+          sufix = sufix?sufix:""
+          const filename = `${prefix}${g2}${sufix}.md`
+          const isList = targetFiles.includes(`${path.dirname(file)}\\${filename}`) || targetFiles.includes(`${path.dirname(file)}\\${g2}\\${filename}`)
           const comment = commentOriginal ? ` %% ${g3}` : ""
+          const preview = (isList || g1==="!") ? "!" : ""
 
-          return `![[${prefix}${g2}${sufix}]]${comment}`
+          return `${preview}[[${isList?filename:g2}]]${comment}`
         })
 
 
