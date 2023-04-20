@@ -1,0 +1,31 @@
+@import "../../identity";
+
+
+
+.div__results_wrap{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    gap: 50px;
+    width: 80%;
+    max-width: 900px;
+    margin: auto;
+
+    text-align: center;
+}
+
+.button__download{
+    padding: 10px 20px;
+    background: $purple;
+    color: $white;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+    box-shadow: 0 0 10px $purple;
+
+    &:hover{
+        filter: brightness(110%);
+    }
+}

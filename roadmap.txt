@@ -1,0 +1,12 @@
+
+ERRORS TO FIX:
+
+- Better Error log
+    - Interactive in-app error check
+    - Output to file format 
+- Fix nested asides
+- Fix links, resolve refs
+- Advanced error detector
+- Metadata based on files, not CSV rows
+- App icon
+- Selectable callout type
