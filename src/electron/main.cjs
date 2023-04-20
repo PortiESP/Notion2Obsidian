@@ -37,12 +37,12 @@ function setupIPC(){
     ipcMain.on("debug", (e, data) => console.log(data))
     ipcMain.on("open-url", (e, data) => shell.openExternal(data))
     ipcMain.handle("check-path", async (e, data) => await fs.existsSync(data))
-    ipcMain.on("run-scripts", (e, data) => runScripts(data))
+    ipcMain.on("run-scripts", runScripts)
 }
 
 
 
-function runScripts(options){
+function runScripts(e, options){
 
     // Returned data
     const results = {
@@ -58,21 +58,41 @@ function runScripts(options){
     }
 
     console.log("Running scripts: ", options)
-    ipcMain.send("on-scripts", 3)
-    // result.nameHash = renameFilesAndFolders(options.exportPath, true)
-    // result.missing = searchFilesByName(options.exportPath, "Untitled Database.md", true)
-    // result.moveToFolder = moveFilesToMatchingFolder(options.exportPath, true)
-    // result.wikilinks = urlFormatter(options.exportPath, true, true)
-    // result.asterisks = stripAsterisks(options.exportPath, true)
-    // result.callouts = calloutFormatter(options.exportPath, true)
-    // result.genListFiles = listFormatter(options.exportPath, {prefix: "@LIST@__", sufix: "__"}, true)
-    // result.metadata = metadataFormatter(options.exportPath, true)
+    
+    
+    e.sender.send("response-script-status", "Renaming files and folders...")
+    result.nameHash = renameFilesAndFolders(options.exportPath, true)
+    e.sender.send("response-script-status", true)
+    
+    e.sender.send("response-script-status", "Finding missing databases...")
+    result.missing = searchFilesByName(options.exportPath, "Untitled Database.md", true)
+    e.sender.send("response-script-status", true)
+    
+    e.sender.send("response-script-status", "Moving files to matching folder...")
+    result.moveToFolder = moveFilesToMatchingFolder(options.exportPath, true)
+    e.sender.send("response-script-status", true)
+    
+    e.sender.send("response-script-status", "Formating URLs as wikilinks format...")
+    result.wikilinks = urlFormatter(options.exportPath, true, true)
+    e.sender.send("response-script-status", true)
+    
+    e.sender.send("response-script-status", "Stripping asterisks from files content...")
+    result.asterisks = stripAsterisks(options.exportPath, true)
+    e.sender.send("response-script-status", true)
+    
+    e.sender.send("response-script-status", "Formatting callouts...")
+    result.callouts = calloutFormatter(options.exportPath, true)
+    e.sender.send("response-script-status", true)
+    
+    e.sender.send("response-script-status", "Generating list files...")
+    result.genListFiles = listFormatter(options.exportPath, {prefix: "@LIST@__", sufix: "__"}, true)
+    e.sender.send("response-script-status", true)
+    
+    e.sender.send("response-script-status", "Generating metadata in the list files...")
+    result.metadata = metadataFormatter(options.exportPath, true)
+    e.sender.send("response-script-status", true)
 
-
-    // Find missing databases 'Untitled Database.md'
-    // results.missingReturn = searchFilesByName(options.exportPath, "Untitled Database.md", debug=true)
-
-
-    console.log(results)
+       
+    e.sender.send("response-script-status", results)
 
 }

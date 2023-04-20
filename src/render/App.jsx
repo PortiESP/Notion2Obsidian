@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import sass from './App.module.scss'
-import po from "@/components/postOffice"
+import {postOfficeSendCBK} from "@/components/postOffice"
 import NavButtons from './components/navButtons/NavButtons'
 
 // Scenes
@@ -13,10 +13,10 @@ import RunScripts from '@/scenes/run_scripts/Run_scripts.jsx'
 function App() {
 
   // Path of the Notion export folder
-  const [exportPath, setExportPath] = useState("")  // Path introduced by the user
+  const [exportPath, setExportPath] = useState("C:/Users/Porti/Desktop/CONVERT/Export-9f787dd1-7f28-4ead-9fa1-421bbef21fbf")  // Path introduced by the user
   // Checking if path is valid on changes
   useEffect(()=>{
-    po("check-path", exportPath, (res)=> setIsPathValid(res))
+    postOfficeSendCBK("check-path", exportPath, (e, res)=> setIsPathValid(res))
   }, [exportPath])
 
   // Tool Setup options
@@ -33,7 +33,12 @@ function App() {
     listNameSufix: "",
     metadata: true,
   })
-  
+  // Results returned from the scripts
+  const [results, setResults] = useState(undefined)
+  useEffect(()=>{
+    console.log("Results: ", results)
+  },[results])
+
   const tips = {
     nameHash: "Remove the hashes from all of the directories and and files name (but not form the references inside the files)",
     moveToFolder: "If a file is at the same path of a directory with the same name, move the file into that directory",
@@ -61,7 +66,7 @@ function App() {
       <Information/>,  // Information and License
       <Path_selection exportPath={exportPath} setExportPath={setExportPath} isPathValid={isPathValid}/>,  // Choose the export file path
       <ToolSetup setupOptions={setupOptions} setSetupOptions={setSetupOptions} tips={tips}/>,  // Tool setup: Select the scripts and othe stuff
-      <RunScripts setupOptions={setupOptions} exportPath={exportPath}/>,  // Loading screen
+      <RunScripts setupOptions={setupOptions} exportPath={exportPath} setResults={setResults}/>,  // Loading screen
     ]
 
   return (
