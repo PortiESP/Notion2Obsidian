@@ -25,8 +25,8 @@ module.exports = function listFormatter(directoryPath, nameFormat={prefix:"", su
       // Get the base name of the CSV file without extension
       const baseName = path.basename(csvFile, path.extname(csvFile));
 
-      // Read the CSV file and get the headers
-      const csvData = fs.readFileSync(csvFile, 'utf8').replaceAll("\r", "");
+      // Read the CSV file and get the headers, using slice to remove artifact "﻿"
+      const csvData = fs.readFileSync(csvFile, 'utf8').replaceAll("\r", "").slice(1);
       let itemsList = csvData.split("\n")  //Parse the csv
       const headers = itemsList[0].split(",");  // Extract the headers
       itemsList = itemsList.slice(1).map(e => e.split(",")[0])  // Extract first colum of each row except the headers

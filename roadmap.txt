@@ -18,5 +18,4 @@ ERRORS TO FIX:
     - Github link
     - Logos
 - Process show log
-- Remove "﻿" character from "﻿Name" in the lists generator script
 - Create a template of lists snippets
