@@ -1,14 +1,20 @@
+import { useState } from "react"
 import sass from "./Run_scripts.module.scss"
 import postOffice from "@/components/postOffice"
 
 export default function RunScripts(props){
 
+    const [num, setNum] = useState(0)
+
     // Parameters
     const scriptName = "Removing blablabla..."
-    const scriptProgress = `${1}/${2}`
+
+    // Substracting "-1" because wikilinksComments and wikilinks are one script
+    const scriptProgress = `${num}/${Object.values(props.setupOptions).filter(e => e === true).length - 1}`
     let pctg = 20
 
     // Run scripts
+    // postOffice("on-scripts", setNum)
     postOffice("run-scripts", {exportPath: props.exportPath, ...props.setupOptions})
 
 

@@ -46,15 +46,31 @@ function runScripts(options){
 
     // Returned data
     const results = {
-        nameHashReturn: null,
-        moveToFolderReturn: null,
-        missingReturn: null,
-        createdListFiles: null,
+        nameHash: undefined,
+        moveToFolder: undefined,
+        wikilinks: undefined,
+        wikilinksComments: undefined,
+        asterisks: undefined,
+        callouts: undefined,
+        missing: undefined,
+        genListFiles: undefined,
+        metadata: undefined,
     }
+
+    console.log("Running scripts: ", options)
+    ipcMain.send("on-scripts", 3)
+    // result.nameHash = renameFilesAndFolders(options.exportPath, true)
+    // result.missing = searchFilesByName(options.exportPath, "Untitled Database.md", true)
+    // result.moveToFolder = moveFilesToMatchingFolder(options.exportPath, true)
+    // result.wikilinks = urlFormatter(options.exportPath, true, true)
+    // result.asterisks = stripAsterisks(options.exportPath, true)
+    // result.callouts = calloutFormatter(options.exportPath, true)
+    // result.genListFiles = listFormatter(options.exportPath, {prefix: "@LIST@__", sufix: "__"}, true)
+    // result.metadata = metadataFormatter(options.exportPath, true)
+
 
     // Find missing databases 'Untitled Database.md'
     // results.missingReturn = searchFilesByName(options.exportPath, "Untitled Database.md", debug=true)
-    results.missingReturn = searchFilesByName("C:/Users/Porti/Desktop/CONVERT/Export-9f787dd1-7f28-4ead-9fa1-421bbef21fbf/", "Untitled Database.md", debug=true)
 
 
     console.log(results)
