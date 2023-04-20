@@ -3,9 +3,8 @@ ERRORS TO FIX:
 
 - Better Error log
     - Interactive in-app error check
-    - Output to file format 
+    - Output to file formatted
 - Fix nested asides
-- Fix links, resolve refs
 - Advanced error detector
 - Metadata based on files, not CSV rows
 - App icon
@@ -20,3 +19,4 @@ ERRORS TO FIX:
     - Logos
 - Process show log
 - Remove "﻿" character from "﻿Name" in the lists generator script
+- Create a template of lists snippets

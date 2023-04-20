@@ -106,7 +106,7 @@ function runScripts(e, options){
     
     if (options.wikilinks){
         e.sender.send("response-script-status", "Formating URLs as wikilinks format...")
-        results.wikilinks = urlFormatter(options.exportPath, true, true)
+        results.wikilinks = urlFormatter(options.exportPath, true, {prefix: options.listNamePrefix, sufix: options.listNameSufix}, true)
         e.sender.send("response-script-status", true)
     }
     

@@ -5,9 +5,12 @@ const path = require('path');
  * Function to process files with a specific extension recursively in a directory.
  * @param {string} baseFolderPath - The path of the base directory from where the search starts.
  * @param {boolean} commentOriginal - Option to enable/disable the Obsidian MD comment with the original URL of the resource.
+ * @param {object} nameDecoration - Handles the possible prefix or sufix that may have the file
+ *   @param {string} sufix - Stores the prefix, if the list have it
+ *   @param {string} prefix - Stores the sufix, if the list have it
  * @param {boolean} debug - Option to enable/disable debug mode.
  */
-module.exports = function urlFormatter(baseFolderPath, commentOriginal=true, debug = false) {
+module.exports = function urlFormatter(baseFolderPath, commentOriginal=true, nameDecoration={prefix:"", sufix:""}, debug = false) {
 
   const errorLog = []
 
@@ -26,7 +29,17 @@ module.exports = function urlFormatter(baseFolderPath, commentOriginal=true, deb
         const content = fs.readFileSync(file, 'utf8');
 
         // Perform pattern replacement in the file content
-        const newContent = content.replace(/(!?)\[(.+?)\]\(([^)]+)\)/g, `$1[[$2]]${commentOriginal ? " %% $3" : ""}`);
+        const newContent = content.replace(/(!?)\[(.+?)\]\(([^)]+\.(.+))\)/g, (match, g1, g2, g3, g4)=>{
+
+          const isList = targetFiles.includes(`${path.dirname(file)}\\${g2}.md`) || targetFiles.includes(`${path.dirname(file)}\\${g2}\\${g2}.md`)
+          let {prefix, sufix} = nameDecoration
+          prefix = isList&&prefix?prefix:""
+          sufix = isList&&sufix?sufix:""
+          const comment = commentOriginal ? ` %% ${g3}` : ""
+
+          return `![[${prefix}${g2}${sufix}]]${comment}`
+        })
+
 
         // Write the new content to the file
         fs.writeFileSync(file, newContent, 'utf8');
