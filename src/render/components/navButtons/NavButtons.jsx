@@ -1,11 +1,12 @@
 import sass from "./NavButtons.module.scss"
 
 
-export default function NavButtons({scene, setScene, isPathValid, results}){
+export default function NavButtons({scene, setScene, isPathValid, results, setupOptions}){
 
     function checkReqs(){
         if (scene === 2 && isPathValid === false) return false  // Check if path is valid to move from scene 2
-        if (scene === 4 && results === undefined) return false  // Check if path is valid to move from scene 2
+        // else if (scene === 3 && setupOptions.any(e => e === true)) return false  // Run if at least open option checked
+        else if (scene === 4 && results === undefined) return false  // Check if path is valid to move from scene 2
         else return true  // If any condition is matched...
     }
 

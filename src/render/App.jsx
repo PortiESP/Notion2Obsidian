@@ -72,8 +72,7 @@ function App() {
     ]
   // Exit when last scene is reached
   useEffect(()=>{
-    console.log(scene, "===", sceneList.length)
-    // scene === sceneList.length && postOfficeSend("exit", null)
+    scene === sceneList.length && postOfficeSend("exit", null)
   },[scene])
 
   return (
@@ -86,7 +85,7 @@ function App() {
         <div className={sass.div__scene_wrap}>
           {sceneList[scene]}
         </div>
-        <NavButtons scene={scene} setScene={setScene} isPathValid={isPathValid}/>
+        <NavButtons scene={scene} setScene={setScene} isPathValid={isPathValid} results={results} setupOptions={setupOptions}/>
       </div>
     </div>
   )
