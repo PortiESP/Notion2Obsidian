@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import sass from './App.module.scss'
-import {postOfficeSendCBK} from "@/components/postOffice"
+import {postOfficeSendCBK, postOfficeSend} from "@/components/postOffice"
 import NavButtons from './components/navButtons/NavButtons'
 
 // Scenes
@@ -9,11 +9,12 @@ import Information from '@/scenes/information/Information.jsx'
 import Path_selection from '@/scenes/path_selection/Path_selection.jsx'
 import ToolSetup from '@/scenes/tool_setup/Tool_setup.jsx'
 import RunScripts from '@/scenes/run_scripts/Run_scripts.jsx'
+import ShowResults from '@/scenes/show_results/Show_Results.jsx'
 
 function App() {
 
   // Path of the Notion export folder
-  const [exportPath, setExportPath] = useState("C:/Users/Porti/Desktop/CONVERT/Export-9f787dd1-7f28-4ead-9fa1-421bbef21fbf")  // Path introduced by the user
+  const [exportPath, setExportPath] = useState("")  // Path introduced by the user
   // Checking if path is valid on changes
   useEffect(()=>{
     postOfficeSendCBK("check-path", exportPath, (res)=> setIsPathValid(res))
@@ -67,7 +68,13 @@ function App() {
       <Path_selection exportPath={exportPath} setExportPath={setExportPath} isPathValid={isPathValid}/>,  // Choose the export file path
       <ToolSetup setupOptions={setupOptions} setSetupOptions={setSetupOptions} tips={tips}/>,  // Tool setup: Select the scripts and othe stuff
       <RunScripts setupOptions={setupOptions} exportPath={exportPath} setResults={setResults}/>,  // Loading screen
+      <ShowResults results={results}/>,  // Show the errors returned by the scripts
     ]
+  // Exit when last scene is reached
+  useEffect(()=>{
+    console.log(scene, "===", sceneList.length)
+    // scene === sceneList.length && postOfficeSend("exit", null)
+  },[scene])
 
   return (
     <div className={sass.app}>
