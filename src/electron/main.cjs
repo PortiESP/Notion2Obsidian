@@ -1,5 +1,5 @@
 // Import modules
-const {app, BrowserWindow, shell, ipcMain} = require('electron')
+const {app, BrowserWindow, shell, ipcMain, dialog} = require('electron')
 const path = require("path")
 const fs = require("fs")
 // Algorithms
@@ -13,6 +13,7 @@ const listFormatter = require("./algorithms/listFormatter.cjs")
 const metadataFormatter = require("./algorithms/metadataFormatter.cjs")
 
 
+// ============================================================================[ EVENTS ]===========================================================>
 // On App Run
 app.on("ready", ()=>{
 
@@ -40,6 +41,19 @@ app.on("ready", ()=>{
 })
 
 
+// // Quit when all windows are closed
+// app.on('window-all-closed', () => {
+//     // On macOS it is common for applications and their menu bar
+//     // to stay active until the user quits explicitly with Cmd + Q
+//     if (process.platform !== 'darwin') {
+//       app.quit();
+//     }
+// });
+
+
+
+
+// ============================================================================[ FUNCTIONS ]===========================================================>
 function setupIPC(){
     ipcMain.on("debug", (e, data) => console.log(data))
     ipcMain.on("open-url", (e, data) => shell.openExternal(data))
@@ -49,6 +63,8 @@ function setupIPC(){
         return ret
     })
     ipcMain.on("run-scripts", runScripts)
+    ipcMain.on("save-results", saveResults)
+    ipcMain.on("exit", ()=> app.exit())
 }
 
 
@@ -121,4 +137,31 @@ function runScripts(e, options){
        
     e.sender.send("response-script-status", results)
 
+}
+
+
+
+function saveResults(e, results){
+    dialog.showSaveDialog({
+        title: 'Save File',
+        buttonLabel: 'Save',
+        defaultPath: '~/Documents/',
+        filters: [
+        { name: 'Text Files', extensions: ['txt'] },
+        { name: 'All Files', extensions: ['*'] }
+        ]
+    }).then(res => {
+        if (!res.canceled) {
+            const filePath = res.filePath;
+            console.log("Saving results at: ", filePath)
+
+            const content = JSON.stringify(results, null, 4)
+            console.log("Saving JSON:", content)
+            fs.writeFileSync(filePath, content)
+
+            // Use the selected file path to save the file
+        }
+    }).catch(err => {
+        console.log(err);
+    });
 }
