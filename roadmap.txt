@@ -20,3 +20,4 @@ ERRORS TO FIX:
 - Process show log
 - Create a template of lists snippets
 - Fix list parameters that contain wildcards such as "(", ")", ...
+- Add errors count (total and by section)

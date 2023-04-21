@@ -5,7 +5,7 @@ const fs = require("fs")
 // Algorithms
 const removeHash = require("./algorithms/removeHash.cjs")
 const moveFilesToMatchingFolder = require("./algorithms/moveFilesToMatchingFolder.cjs")
-const searchFilesByName = require("./algorithms/findMissingDBs.cjs")
+const searchFilesByName = require("./algorithms/searchFilesByName.cjs")
 const urlFormatter = require("./algorithms/urlFormatter.cjs")
 const stripAsterisks = require("./algorithms/stripAsterisks.cjs")
 const calloutFormatter = require("./algorithms/calloutFormatter.cjs")
