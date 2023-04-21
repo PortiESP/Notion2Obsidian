@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const getAllFilesRecursively = require('./getAllFilesRecursively.cjs');
 
 /**
  * Process files recursively in a folder, applying a regular expression pattern to replace content.
@@ -10,9 +11,8 @@ module.exports = function calloutConverter(folderPath, debug=true) {
 
   const errorLog = []
 
-  
   // Get all files recursively in the folder with the specified extension
-  const files = getFilesRecursively(folderPath, '.md');
+  const files = getAllFilesRecursively(folderPath).filter( filePath => path.parse(filePath).ext === ".md");
   
   // Define RegEx pattern
   const regex = /<aside>\n*([\s\S]*?)<\/aside>/gm;
@@ -60,31 +60,5 @@ module.exports = function calloutConverter(folderPath, debug=true) {
   });
   
   return errorLog;
-}
-
-/**
- * Get all files recursively in a folder with a specific extension.
- * @param {string} folderPath - The path of the folder to search in.
- * @param {string} extension - The file extension to filter by.
- * @returns {string[]} - An array of file paths.
- */
-function getFilesRecursively(folderPath, extension) {
-  let files = [];
-  
-  // Read the contents of the folder
-  fs.readdirSync(folderPath).forEach(file => {
-    const filePath = path.join(folderPath, file);
-    const fileStat = fs.statSync(filePath);
-    
-    if (fileStat.isDirectory()) {
-      // If it's a directory, recursively get files from it
-      files = files.concat(getFilesRecursively(filePath, extension));
-    } else if (path.extname(file) === extension) {
-      // If it's a file with the specified extension, add it to the files array
-      files.push(filePath);
-    }
-  });
-  
-  return files;
 }
 
