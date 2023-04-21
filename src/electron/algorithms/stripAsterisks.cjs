@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const getAllFilesRecursively = require('./getAllFilesRecursively.cjs')
 
 
 
@@ -12,11 +13,13 @@ module.exports = function stripAsterisk(folderPath, debug) {
 
   const errorLog = []
 
-  // Get a list of all files with .md extension in the folder and its subfolders
-  const files = getFilesInFolder(folderPath, '.md');
+  // Get a list of all files in the path 
+  const files = getAllFilesRecursively(folderPath, false);
+  // Filter by extension
+  const filteredList = files.filter(file => path.parse(file).ext === ".md")
   
   // Iterate through each file
-  files.forEach(file => {
+  filteredList.forEach(file => {
       try {
         // Read the content of the file
         const content = fs.readFileSync(file, 'utf8');
@@ -47,34 +50,4 @@ module.exports = function stripAsterisk(folderPath, debug) {
 
 
 
-
-/**
- * Helper function to get a list of files with a specific extension in a folder and its subfolders.
- * @param {string} folderPath - The path of the folder to search.
- * @param {string} fileExtension - The file extension to filter by.
- * @returns {string[]} - An array of file paths.
- */
-function getFilesInFolder(folderPath, fileExtension) {
-  let files = [];
-
-  // Read the contents of the folder
-  const folderContents = fs.readdirSync(folderPath);
-
-  // Iterate through each item in the folder
-  folderContents.forEach(item => {
-    const itemPath = path.join(folderPath, item);
-
-    // Check if the item is a file with the specified extension
-    if (fs.statSync(itemPath).isFile() && path.extname(itemPath) === fileExtension) {
-      files.push(itemPath);
-    }
-
-    // If the item is a directory, recursively call the function to get files inside it
-    if (fs.statSync(itemPath).isDirectory()) {
-      files = files.concat(getFilesInFolder(itemPath, fileExtension));
-    }
-  });
-
-  return files;
-}
 
