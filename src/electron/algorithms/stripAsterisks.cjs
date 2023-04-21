@@ -25,17 +25,15 @@ module.exports = function stripAsterisk(folderPath, debug) {
         const content = fs.readFileSync(file, 'utf8');
 
         // Apply the regular expression and update the content of the file
-        const updatedContent = content.replace(/\*+\*\*([^\*]+)\*\*\*+/g, '**$1**');
+        const updatedContent = content.replace(/\*{3,}([^\*]+)\*{3,}/g, '**$1**');
+        // Check if there are still '*' in the file
+        /\*{3,}/g.test(updatedContent) && errorLog.push({file, error: "There are still arrays of '*' in the file..."})
         
         // Write the updated content to the file
         fs.writeFileSync(file, updatedContent);
         
-        /\*\*\*+/g.test(updatedContent) && errorLog.push({file, error: "There are still arrays of '*' in the file..."})
+        if (debug) console.log(`[+] Regular expression applied in: ${file}`);
 
-
-        if (debug) {
-          console.log(`[+] Regular expression applied in: ${file}`);
-        }
       } catch (error) {
         // Log any errors that occur during the execution to the error log file
         errorLog.push({file: file, error: error.message})

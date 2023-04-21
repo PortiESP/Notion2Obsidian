@@ -14,7 +14,7 @@ import stripAsterisks from "./stripAsterisks.cjs"
 
 // console.log(searchFilesByName("C:/Users/Porti/Desktop/CONVERT/Export-9f787dd1-7f28-4ead-9fa1-421bbef21fbf/", "Untitled Database.md", true))
 
-console.log(stripAsterisks("C:/Users/Porti/Desktop/CONVERT/Export-9f787dd1-7f28-4ead-9fa1-421bbef21fbf/", true))
+console.log(stripAsterisks("C:/Users/Porti/Desktop/CONVERT/Export-9f787dd1-7f28-4ead-9fa1-421bbef21fbf/Export-9f787dd1-7f28-4ead-9fa1-421bbef21fbf/Software docs/Docs, programming and markup languages/C/Memory concepts", true))
 // console.log(calloutFormatter("C:/Users/Porti/Desktop/CONVERT/Export-9f787dd1-7f28-4ead-9fa1-421bbef21fbf/", true))
 
 // console.log(listFormatter("C:/Users/Porti/Desktop/CONVERT/Export-9f787dd1-7f28-4ead-9fa1-421bbef21fbf/", {prefix: "@LIST@__"}, true))
