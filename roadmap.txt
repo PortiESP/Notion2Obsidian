@@ -11,7 +11,6 @@ TO-DO List:
     - Improve UI
         - Relevant info
     - Header 
-        - Github link
         - Logos
     - Process show log
     - Create a template of lists snippets

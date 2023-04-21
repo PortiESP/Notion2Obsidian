@@ -3,6 +3,9 @@ import sass from './App.module.scss'
 import {postOfficeSendCBK, postOfficeSend} from "@/components/postOffice"
 import NavButtons from './components/navButtons/NavButtons'
 
+// Assets
+import ghIcon from "./assets/github-original.svg"
+
 // Scenes
 import Welcome from '@/scenes/welcome/Welcome.jsx'
 import Information from '@/scenes/information/Information.jsx'
@@ -79,7 +82,7 @@ function App() {
     <div className={sass.app}>
       <div className={sass.div__header}>
         <h2>Notion2Obsidian</h2>
-        <span>@PortiESP</span>
+        <span onClick={()=>postOfficeSend("open-url", "https://github.com/PortiESP/Notion2Obsidian")}><img src={ghIcon}/>PortiESP</span>
       </div>
       <div className={sass.div__body}>
         <div className={sass.div__scene_wrap}>

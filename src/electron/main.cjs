@@ -27,8 +27,12 @@ app.on("ready", ()=>{
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
-        }
+            // devTools: false,
+        },
     })
+
+    // Window settings
+    mainWindow.setMenu(null)
 
     // Load window content
     // mainWindow.loadURL("http://localhost:6969")  // DEBUG
