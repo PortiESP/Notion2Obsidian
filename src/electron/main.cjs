@@ -9,7 +9,7 @@ const searchFilesByName = require("./algorithms/searchFilesByName.cjs")
 const urlFormatter = require("./algorithms/urlFormatter.cjs")
 const stripAsterisks = require("./algorithms/stripAsterisks.cjs")
 const calloutFormatter = require("./algorithms/calloutFormatter.cjs")
-const listFormatter = require("./algorithms/listFormatter.cjs")
+const generateListFiles = require("./algorithms/generateListFiles.cjs")
 const metadataFormatter = require("./algorithms/metadataFormatter.cjs")
 
 
@@ -120,7 +120,7 @@ function runScripts(e, options){
     
     if (options.genListFiles){
         e.sender.send("response-script-status", "Generating list files...")
-        results.genListFiles = listFormatter(options.exportPath, {prefix: options.listNamePrefix, sufix: options.listNameSufix}, true)
+        results.genListFiles = generateListFiles(options.exportPath, {prefix: options.listNamePrefix, sufix: options.listNameSufix}, true)
         e.sender.send("response-script-status", true)
     }
     

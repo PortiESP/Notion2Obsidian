@@ -3,8 +3,8 @@
 // import moveFilesToMatchingFolder from "./moveFilesToMatchingFolder.cjs"
 // import urlFormatter from "./urlFormatter.cjs"
 // import stripAsterisks from "./stripAsterisks.cjs"
-import calloutFormatter from "./calloutFormatter.cjs"
-// import listFormatter from "./listFormatter.cjs"
+// import calloutFormatter from "./calloutFormatter.cjs"
+import generateListFiles from "./generateListFiles.cjs"
 // import metadataFormatter from "./metadataFormatter.cjs"
 // import getAllFilesRecursively from "./getAllFilesRecursively.cjs"
 
@@ -15,9 +15,9 @@ import calloutFormatter from "./calloutFormatter.cjs"
 // console.log(searchFilesByName("C:/Users/Porti/Desktop/CONVERT/Export-9f787dd1-7f28-4ead-9fa1-421bbef21fbf/", "Untitled Database.md", true))
 
 // console.log(stripAsterisks("C:/Users/Porti/Desktop/CONVERT/Export-9f787dd1-7f28-4ead-9fa1-421bbef21fbf/Export-9f787dd1-7f28-4ead-9fa1-421bbef21fbf/Software docs/Docs, programming and markup languages/C/Memory concepts", true))
-console.log(calloutFormatter("C:/Users/Porti/Desktop/CONVERT/Export-9f787dd1-7f28-4ead-9fa1-421bbef21fbf/Export-9f787dd1-7f28-4ead-9fa1-421bbef21fbf/Software docs/Docs, programming and markup languages/C/Memory concepts", true))
+// console.log(calloutFormatter("C:/Users/Porti/Desktop/CONVERT/Export-9f787dd1-7f28-4ead-9fa1-421bbef21fbf/Export-9f787dd1-7f28-4ead-9fa1-421bbef21fbf/Software docs/Docs, programming and markup languages/C/Memory concepts", true))
 
-// console.log(listFormatter("C:/Users/Porti/Desktop/CONVERT/Export-9f787dd1-7f28-4ead-9fa1-421bbef21fbf/", {prefix: "@LIST@__"}, true))
+console.log(generateListFiles("C:/Users/Porti/Desktop/CONVERT/Export-9f787dd1-7f28-4ead-9fa1-421bbef21fbf/Export-9f787dd1-7f28-4ead-9fa1-421bbef21fbf/Software docs/Software Fields/Protocols/Protocols", {prefix: "@LIST@__"}, true))
 // console.log(metadataFormatter("C:/Users/Porti/Desktop/CONVERT/Export-9f787dd1-7f28-4ead-9fa1-421bbef21fbf/", true))
 
 // console.log(urlFormatter("C:/Users/Porti/Desktop/CONVERT/Export-9f787dd1-7f28-4ead-9fa1-421bbef21fbf/Export-9f787dd1-7f28-4ead-9fa1-421bbef21fbf/Software docs/Docs, programming and markup languages/C/", true, {prefix:"@LIST@__"}, true))
