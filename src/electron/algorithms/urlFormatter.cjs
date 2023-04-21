@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const getAllFilesRecursively = require("./getAllFilesRecursively.cjs")
 
 /**
  * Function to process files with a specific extension recursively in a directory.
@@ -15,7 +16,7 @@ module.exports = function urlFormatter(baseFolderPath, commentOriginal=true, nam
   const errorLog = []
 
   // Get the list of files recursively in the base directory
-  const files = getAllFilesRecursive(baseFolderPath);
+  const files = getAllFilesRecursively(baseFolderPath);
   
   // Filter files that have the target extension
   const targetFiles = files.filter(file => path.extname(file) === ".md");
@@ -57,24 +58,6 @@ module.exports = function urlFormatter(baseFolderPath, commentOriginal=true, nam
   return errorLog
 }
 
-/**
- * Function to get the list of files recursively in a directory.
- * @param {string} directoryPath - The path of the base directory.
- * @returns {string[]} - An array with the full paths of the found files.
- */
-function getAllFilesRecursive(directoryPath) {
-  let files = [];
-  const elements = fs.readdirSync(directoryPath);
-  elements.forEach(element => {
-    const elementPath = path.join(directoryPath, element);
-    const elementInfo = fs.statSync(elementPath);
-    if (elementInfo.isDirectory()) {
-      files = files.concat(getAllFilesRecursive(elementPath));
-    } else {
-      files.push(elementPath);
-    }
-  });
-  return files;
-}
+
 
 

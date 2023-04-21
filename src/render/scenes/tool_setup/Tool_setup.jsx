@@ -17,11 +17,11 @@ export default function Setup(props){
 
             <h2>Restructure export</h2>
 
-            <div className={sass.div__item} title={props.tips.nameHash}>
-                <input type="checkbox" disabled onChange={()=> props.setSetupOptions(old => {return {...old, nameHash:!old.nameHash}})} checked={props.setupOptions.nameHash} id="ck--name-hash"/>
+            <div className={sass.div__item} title={props.tips.removeHash}>
+                <input type="checkbox" disabled onChange={()=> props.setSetupOptions(old => {return {...old, removeHash:!old.removeHash}})} checked={props.setupOptions.removeHash} id="ck--name-hash"/>
                 <label htmlFor="ck--name-hash">String hash from file names </label>
             </div>
-            { props.setupOptions.nameHash && <p className={sass.example}><span className={sass.code}>myNote b6d4gh6gh46dr4vzx328u8u.md</span> as <span className={sass.code}>myNote.md</span></p>}
+            { props.setupOptions.removeHash && <p className={sass.example}><span className={sass.code}>myNote b6d4gh6gh46dr4vzx328u8u.md</span> as <span className={sass.code}>myNote.md</span></p>}
 
             <div className={sass.div__item} title={props.tips.moveToFolder}>
                 <input type="checkbox" disabled onChange={()=> props.setSetupOptions(old => {return {...old, moveToFolder:!old.moveToFolder}})} checked={props.setupOptions.moveToFolder} id="ck--move-to-folder"/>

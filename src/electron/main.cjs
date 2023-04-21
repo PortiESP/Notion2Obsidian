@@ -3,7 +3,7 @@ const {app, BrowserWindow, shell, ipcMain, dialog} = require('electron')
 const path = require("path")
 const fs = require("fs")
 // Algorithms
-const renameFilesAndFolders = require("./algorithms/renameFilesAndDirs.cjs")
+const removeHash = require("./algorithms/removeHash.cjs")
 const moveFilesToMatchingFolder = require("./algorithms/moveFilesToFolder.cjs")
 const searchFilesByName = require("./algorithms/findMissingDBs.cjs")
 const urlFormatter = require("./algorithms/urlFormatter.cjs")
@@ -73,7 +73,7 @@ function runScripts(e, options){
 
     // Returned data
     const results = {
-        nameHash: undefined,
+        removeHash: undefined,
         moveToFolder: undefined,
         wikilinks: undefined,
         wikilinksComments: undefined,
@@ -88,9 +88,9 @@ function runScripts(e, options){
 
     /* !!! The order in which the scripts are runned matters, some scripts assume that others where run before them */
     
-    if (options.nameHash){
+    if (options.removeHash){
         e.sender.send("response-script-status", "Renaming files and folders...")
-        results.nameHash = renameFilesAndFolders(options.exportPath, true)
+        results.removeHash = removeHash(options.exportPath, true)
         e.sender.send("response-script-status", true)
     }
     

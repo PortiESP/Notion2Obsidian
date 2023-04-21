@@ -22,7 +22,7 @@ function App() {
 
   // Tool Setup options
   const [setupOptions, setSetupOptions] = useState({
-    nameHash: true,
+    removeHash: true,
     moveToFolder: true,
     wikilinks: true,
     wikilinksComments: true,
@@ -41,7 +41,7 @@ function App() {
   },[results])
 
   const tips = {
-    nameHash: "Remove the hashes from all of the directories and and files name (but not form the references inside the files)",
+    removeHash: "Remove the hashes from all of the directories and and files name (but not form the references inside the files)",
     moveToFolder: "If a file is at the same path of a directory with the same name, move the file into that directory",
     wikilinks: "Convert the clasic Markdown URLs and Images into Wikilinks format",
     wikilinksComments: "Keep the original URLs as comments in case the URLs gets broken, you can recover the original URL",
