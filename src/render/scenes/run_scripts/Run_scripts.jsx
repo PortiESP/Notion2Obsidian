@@ -5,11 +5,11 @@ import { postOfficeSendAndListen } from "../../components/postOffice"
 export default function RunScripts(props){
 
     const [num, setNum] = useState(0)
+    // Substracting "-1" because wikilinksComments and wikilinks are one script
     const maxNum = Object.values(props.setupOptions).filter(e => e === true).length - 1
     
     // Parameters
     const [msg, setMsg] = useState("Starting progress...")
-    // Substracting "-1" because wikilinksComments and wikilinks are one script
     const scriptProgress = `${num}/${maxNum}`
     let pctg = num/maxNum * 100
 

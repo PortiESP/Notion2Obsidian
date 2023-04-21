@@ -16,6 +16,7 @@ TO-DO List:
     - Process show log
     - Create a template of lists snippets
     - Add errors count (total and by section)
+    - Callouts detect icon to choose callout type
 
 
 ADDED:
