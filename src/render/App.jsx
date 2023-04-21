@@ -24,15 +24,15 @@ function App() {
   const [setupOptions, setSetupOptions] = useState({
     removeHash: true,
     moveToFolder: true,
-    wikilinks: true,
-    wikilinksComments: true,
-    asterisks: true,
-    callouts: true,
-    missing: true,
+    urlFormatter: true,
+    urlFormatterComments: true,
+    stripAsterisks: true,
+    calloutsFormatter: true,
+    findMissingDBs: true,
     genListFiles: true,
     listNamePrefix: "@LIST@__",
     listNameSufix: "",
-    metadata: true,
+    metadataFormatter: true,
   })
   // Results returned from the scripts
   const [results, setResults] = useState(undefined)
@@ -43,15 +43,15 @@ function App() {
   const tips = {
     removeHash: "Remove the hashes from all of the directories and and files name (but not form the references inside the files)",
     moveToFolder: "If a file is at the same path of a directory with the same name, move the file into that directory",
-    wikilinks: "Convert the clasic Markdown URLs and Images into Wikilinks format",
-    wikilinksComments: "Keep the original URLs as comments in case the URLs gets broken, you can recover the original URL",
-    asterisks: "Remove repeated asterisks from bold stings",
-    callouts: "Convert Notion callouts to Obsidian callouts format",
-    missing: "Generate a file with the path of the missing databases (File is empty and with name 'Untitled Database.md')",
+    urlFormatter: "Convert the clasic Markdown URLs and Images into wikilinks format",
+    urlFormatterComments: "Keep the original URLs as comments in case the URLs gets broken, you can recover the original URL",
+    stripAsterisks: "Remove repeated asterisks from bold stings",
+    calloutsFormatter: "Convert Notion callouts to Obsidian callouts format",
+    findMissingDBs: "Generate a file with the path of the missing databases (File is empty and with name 'Untitled Database.md')",
     genListFiles: "Generate a list '.md' file based on the data of the '.svg' files using the Dataview plugin with the properties of the notes al columns ",
     listNamePrefix: "Allows the user to add a prefix to the generated list file (previous checkbox) so it may be easyer to difference from normal notes in the explorer",
     listNameSufix: "Same as the prefix, but add at the end of the filename",
-    metadata: "Take the Notions properties and parse them as Obsidians note metadata, wrapped between '---'",
+    metadataFormatter: "Take the Notions properties and parse them as Obsidians note metadata, wrapped between '---'",
   }
   useEffect(()=>{
     console.log(setupOptions)

@@ -1,16 +1,13 @@
 
 TO-DO List:
 
-    - Better Error log
+    - * Better Error log
         - Interactive in-app error check
         - Output to file formatted
-    - Advanced error detector
-    - Metadata based on files, not CSV rows
+    - * Advanced error detector
+    - * Metadata based on files, not CSV rows
     - App icon
     - Selectable callout type
-    - Optimize Algorithms
-        - Rename with significant and consistent names
-        - Modularize
     - Improve UI
         - Relevant info
     - Header 
@@ -18,7 +15,6 @@ TO-DO List:
         - Logos
     - Process show log
     - Create a template of lists snippets
-    - Fix list parameters that contain wildcards such as "(", ")", ...
     - Add errors count (total and by section)
 
 

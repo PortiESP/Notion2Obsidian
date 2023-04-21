@@ -73,15 +73,15 @@ function runScripts(e, options){
 
     // Returned data
     const results = {
-        removeHash: undefined,
-        moveToFolder: undefined,
-        wikilinks: undefined,
-        wikilinksComments: undefined,
-        asterisks: undefined,
-        callouts: undefined,
-        missing: undefined,
-        genListFiles: undefined,
-        metadata: undefined,
+        removeHashLogs: undefined,
+        moveToFolderLogs: undefined,
+        urlFormatterLogs: undefined,
+        urlFormatterCommentsLogs: undefined,
+        stripAsterisksLogs: undefined,
+        calloutsFormatterLogs: undefined,
+        findMissingDBsLogs: undefined,
+        genListFilesLogs: undefined,
+        metadataFormatterLogs: undefined,
     }
 
     console.log("Running scripts: ", options)
@@ -90,49 +90,49 @@ function runScripts(e, options){
     
     if (options.removeHash){
         e.sender.send("response-script-status", "Renaming files and folders...")
-        results.removeHash = removeHash(options.exportPath, true)
+        results.removeHashLogs = removeHash(options.exportPath, true)
         e.sender.send("response-script-status", true)
     }
     
-    if (options.missing){
+    if (options.findMissingDBs){
         e.sender.send("response-script-status", "Finding missing databases...")
-        results.missing = searchFilesByName(options.exportPath, "Untitled Database.md", true)
+        results.findMissingDBsLogs = searchFilesByName(options.exportPath, "Untitled Database.md", true)
         e.sender.send("response-script-status", true)
     }
     
     if (options.moveToFolder){
         e.sender.send("response-script-status", "Moving files to matching folder...")
-        results.moveToFolder = moveFilesToMatchingFolder(options.exportPath, true)
+        results.moveToFolderLogs = moveFilesToMatchingFolder(options.exportPath, true)
         e.sender.send("response-script-status", true)
     }
     
-    if (options.asterisks){
+    if (options.stripAsterisks){
         e.sender.send("response-script-status", "Stripping asterisks from files content...")
-        results.asterisks = stripAsterisks(options.exportPath, true)
+        results.stripAsterisksLogs = stripAsterisks(options.exportPath, true)
         e.sender.send("response-script-status", true)
     }
     
-    if (options.callouts){
+    if (options.calloutsFormatter){
         e.sender.send("response-script-status", "Formatting callouts...")
-        results.callouts = calloutFormatter(options.exportPath, true)
+        results.calloutsFormatterLogs = calloutFormatter(options.exportPath, true)
         e.sender.send("response-script-status", true)
     }
     
     if (options.genListFiles){
         e.sender.send("response-script-status", "Generating list files...")
-        results.genListFiles = generateListFiles(options.exportPath, {prefix: options.listNamePrefix, sufix: options.listNameSufix}, true)
+        results.genListFilesLogs = generateListFiles(options.exportPath, {prefix: options.listNamePrefix, sufix: options.listNameSufix}, true)
         e.sender.send("response-script-status", true)
     }
     
-    if (options.metadata){
+    if (options.metadataFormatter){
         e.sender.send("response-script-status", "Generating metadata in the list files...")
-        results.metadata = metadataFormatter(options.exportPath, true)
+        results.metadataFormatterLogs = metadataFormatter(options.exportPath, true)
         e.sender.send("response-script-status", true)
     }
 
-    if (options.wikilinks){
+    if (options.urlFormatter){
         e.sender.send("response-script-status", "Formating URLs as wikilinks format...")
-        results.wikilinks = urlFormatter(options.exportPath, true, {prefix: options.listNamePrefix, sufix: options.listNameSufix}, true)
+        results.urlFormatterLogs = urlFormatter(options.exportPath, true, {prefix: options.listNamePrefix, sufix: options.listNameSufix}, true)
         e.sender.send("response-script-status", true)
     }
     

@@ -29,8 +29,8 @@ export default function Setup(props){
             </div>
             { props.setupOptions.moveToFolder && <p className={sass.example}><span className={sass.code}>./myNote.md</span> moved to <span className={sass.code}>./myNote/myNote.md</span></p>}
 
-            <div className={sass.div__item} title={props.tips.missing}>
-                <input type="checkbox" onChange={()=> props.setSetupOptions(old => {return {...old, missing:!old.missing}})} checked={props.setupOptions.missing} id="ck--missing"/>
+            <div className={sass.div__item} title={props.tips.findMissingDBs}>
+                <input type="checkbox" onChange={()=> props.setSetupOptions(old => {return {...old, findMissingDBs:!old.findMissingDBs}})} checked={props.setupOptions.findMissingDBs} id="ck--missing"/>
                 <label htmlFor="ck--missing">Generate a list with missing databases </label>
             </div>
 
@@ -38,25 +38,25 @@ export default function Setup(props){
 
             <h2>Format elements</h2>
 
-            <div className={sass.div__item} title={props.tips.wikilinks}>
-                <input type="checkbox" onChange={()=> props.setSetupOptions(old => {return {...old, wikilinks:!old.wikilinks}})} checked={props.setupOptions.wikilinks} id="ck--wikilinks"/>
-                <label htmlFor="ck--wikilinks">Format URL/Img as Wikilinks </label>
+            <div className={sass.div__item} title={props.tips.urlFormatter}>
+                <input type="checkbox" onChange={()=> props.setSetupOptions(old => {return {...old, urlFormatter:!old.urlFormatter}})} checked={props.setupOptions.urlFormatter} id="ck--urlFormatter"/>
+                <label htmlFor="ck--urlFormatter">Format URL/Img as Wikilinks </label>
             </div>
-            <div className={[sass.div__item, sass.div__subitem, !props.setupOptions.wikilinks && sass.disabled].join(" ")} title={props.tips.wikilinksComments}>
-                <input type="checkbox" onChange={()=> props.setSetupOptions(old => {return {...old, wikilinksComments:!old.wikilinksComments}})} checked={props.setupOptions.wikilinks && props.setupOptions.wikilinksComments} id="ck--wikilinks-comments" disabled={!props.setupOptions.wikilinks}/>
-                <label htmlFor="ck--wikilinks-comments">Keep original URLs as Obsidian MD comment</label>
+            <div className={[sass.div__item, sass.div__subitem, !props.setupOptions.urlFormatter && sass.disabled].join(" ")} title={props.tips.urlFormatterComments}>
+                <input type="checkbox" onChange={()=> props.setSetupOptions(old => {return {...old, urlFormatterComments:!old.urlFormatterComments}})} checked={props.setupOptions.urlFormatter && props.setupOptions.urlFormatterComments} id="ck--urlFormatter-comments" disabled={!props.setupOptions.urlFormatter}/>
+                <label htmlFor="ck--urlFormatter-comments">Keep original URLs as Obsidian MD comment</label>
             </div>
             { props.setupOptions.wikilinks && <p className={sass.example}><span className={sass.code}>![Alt text](https://...)</span> as <span className={sass.code}>![[Alt text]]{props.setupOptions.wikilinksComments && " %% https://..."}</span></p>}
 
-            <div className={sass.div__item} title={props.tips.asterisks}>
-                <input type="checkbox" onChange={()=> props.setSetupOptions(old => {return {...old, asterisks:!old.asterisks}})} checked={props.setupOptions.asterisks} id="ck--asterisks"/>
-                <label htmlFor="ck--asterisks">Strip repetitive asterisks from bold strings </label>
+            <div className={sass.div__item} title={props.tips.stripAsterisks}>
+                <input type="checkbox" onChange={()=> props.setSetupOptions(old => {return {...old, stripAsterisks:!old.stripAsterisks}})} checked={props.setupOptions.stripAsterisks} id="ck--stripAsterisks"/>
+                <label htmlFor="ck--stripAsterisks">Strip repetitive asterisks from bold strings </label>
             </div>
             { props.setupOptions.asterisks && <p className={sass.example}><span className={sass.code}>********boldText********</span> as <span className={sass.code}>**boldText**</span></p>}
 
-            <div className={sass.div__item} title={props.tips.callouts}>
-                <input type="checkbox" onChange={()=> props.setSetupOptions(old => {return {...old, callouts:!old.callouts}})} checked={props.setupOptions.callouts} id="ck--callouts"/>
-                <label htmlFor="ck--callouts">Format callouts for obsidian </label>
+            <div className={sass.div__item} title={props.tips.calloutsFormatter}>
+                <input type="checkbox" onChange={()=> props.setSetupOptions(old => {return {...old, calloutsFormatter:!old.calloutsFormatter}})} checked={props.setupOptions.calloutsFormatter} id="ck--calloutsFormatter"/>
+                <label htmlFor="ck--calloutsFormatter">Format callouts for obsidian </label>
             </div>
             { props.setupOptions.callouts && <p className={sass.example}><span className={sass.code}>{`<aside>My Callout</aside>`}</span> as <span className={sass.code}>{`> [!note]\\n> My Callout`}</span></p>}
 
@@ -84,9 +84,9 @@ export default function Setup(props){
                 </div>
             }
 
-            <div className={sass.div__item} title={props.tips.metadata}>
-                <input type="checkbox" onChange={()=> props.setSetupOptions(old => {return {...old, metadata:!old.metadata}})} checked={props.setupOptions.metadata} id="ck--metadata"/>
-                <label htmlFor="ck--metadata">Format Notions page attributes as Obsidian's note metadata <span className={sass.labelMsg}>(Mark this option to have addition information of the notes in the Dataview tables)</span></label>
+            <div className={sass.div__item} title={props.tips.metadataFormatter}>
+                <input type="checkbox" onChange={()=> props.setSetupOptions(old => {return {...old, metadataFormatter:!old.metadataFormatter}})} checked={props.setupOptions.metadataFormatter} id="ck--metadataFormatter"/>
+                <label htmlFor="ck--metadataFormatter">Format Notions page attributes as Obsidian's note metadata <span className={sass.labelMsg}>(Mark this option to have addition information of the notes in the Dataview tables)</span></label>
             </div>
 
         </div>
