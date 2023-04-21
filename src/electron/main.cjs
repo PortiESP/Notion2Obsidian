@@ -27,12 +27,13 @@ app.on("ready", ()=>{
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
-            // devTools: false,
+            // devTools: true,
         },
     })
 
     // Window settings
-    mainWindow.setMenu(null)
+    // mainWindow.setMenu(null)
+    // mainWindow.webContents.openDevTools()
 
     // Load window content
     // mainWindow.loadURL("http://localhost:6969")  // DEBUG
@@ -79,11 +80,10 @@ function runScripts(e, options){
     const results = {
         removeHashLogs: undefined,
         moveToFolderLogs: undefined,
+        findMissingDBsLogs: undefined,
         urlFormatterLogs: undefined,
-        urlFormatterCommentsLogs: undefined,
         stripAsterisksLogs: undefined,
         calloutsFormatterLogs: undefined,
-        findMissingDBsLogs: undefined,
         genListFilesLogs: undefined,
         metadataFormatterLogs: undefined,
     }

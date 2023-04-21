@@ -14,6 +14,18 @@
     margin: auto;
 
     text-align: center;
+
+    & p{
+        color: $gray;
+        font-style: italic;
+        font-size: 1.1em;
+        margin: 10px;
+
+        & span{
+            color: $darkwhite;
+            font-family: monospace;
+        }
+    }
 }
 
 .button__download{
