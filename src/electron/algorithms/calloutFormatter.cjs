@@ -31,7 +31,9 @@ module.exports = function calloutConverter(folderPath, debug=true) {
         fs.writeFileSync(filePath, updatedContent);
         if (debug) console.log(`[+] Replacement performed in: ${filePath}`);
       }
-        
+      
+      // Error check
+      /<\/?aside>/g.test(updatedContent) && errorLog.push({file: filePath, error: "There are still '<aside>' tags in the file, this can be because of callout that were inside other callouts"})
       
     } catch(err){
       errorLog.push({file: filePath, error: err})
@@ -74,39 +76,3 @@ function calloutReplacingAlgorithm(content){
   return updatedContent
   
 }
-
-// const openLen = "<aside>".length
-
-// // Stack of tags possition index
-// let openPos = [content.indexOf("<aside>"),]
-
-// let depth = 1
-// while (depth > 0){
-//   // Find next tags from the current one
-//   let nextOpenPos = content.indexOf("<aside>", openPos+openLen)
-//   let nextEndPos = content.indexOf("</aside>", openPos+openLen)
-
-//   if (nextOpenPos != -1 && nextOpenPos < nextEndPos){
-
-//   }
-// }
-
-
-// // Loop through each match
-// matchResults.forEach(match => {
-//   // Extract the substring matched by the capturing group
-//   const grupo = match[1].replace(/\r?\n$/, '');
-  
-//   // Replace line breaks with '> ' to format the substring as a blockquote
-  
-//   // Replace the original match with the parsed content in the updated content
-//   content = content.replace(match[0], parsed);
-// });
-
-// // Write the updated content back to the file
-
-// // Print a message indicating the replacement was done
-// if (debug) console.log(`[+] Replacement performed in: ${filePath}`);
-
-// // Error check
-// /<\/?aside>/g.test(updatedContent) && errorLog.push({file: filePath, error: "There are still '<aside>' tags in the file, this can be because of callout that were inside other callouts"})
