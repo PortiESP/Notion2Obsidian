@@ -1,5 +1,7 @@
+
 const fs = require('fs');
 const path = require('path');
+const getAllFilesRecursively = require('./getAllFilesRecursively.cjs');
 
 
 /**
@@ -10,7 +12,7 @@ const path = require('path');
 */
 module.exports = function formatMetadataOfListItems(dirPath, debug=true){
   
-  const csv_files = searchFilesByExtension(dirPath, ".csv"); // Search for CSV files in the folder
+  const csv_files = getAllFilesRecursively(dirPath, false).filter( e => path.parse(e).ext === ".csv" ); // Search for CSV files in the folder
   const errorLog = []
   
   for (file of csv_files){
@@ -94,35 +96,3 @@ function processCSVFile(csvPath, debug=true) {
 
   return errors;
 }
-
-/**
- * Function to search for files by name recursively in a given directory
- * and write the results to a file
- *
- * @param {string} directoryPath - The path of the directory to start the search from
- * @param {string} extension - The extension of the file to search for
- */
-function searchFilesByExtension(directoryPath, extension) {
-  const results = []; // Array to store matching file paths
-
-  // Recursive function to search for files
-  function searchRecursively(currentPath) {
-    const files = fs.readdirSync(currentPath);
-    files.forEach((file) => {
-      const filePath = path.join(currentPath, file);
-      const fileStat = fs.statSync(filePath);
-
-      if (fileStat.isDirectory()) {
-        // If it's a directory, search recursively
-        searchRecursively(filePath);
-      } else if (path.extname(file) === extension) {
-        // If the file matches the given name, add it to results
-        results.push(filePath);
-      }
-    });
-  }
-  
-  searchRecursively(directoryPath);
-
-  return results;
-};

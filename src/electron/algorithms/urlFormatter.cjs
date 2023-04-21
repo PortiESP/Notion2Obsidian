@@ -2,8 +2,12 @@ const fs = require('fs');
 const path = require('path');
 const getAllFilesRecursively = require("./getAllFilesRecursively.cjs")
 
+/*
+  !!! This script requires to be runned before then `./generateListFiles.cjs` script, list files must be created, in other case the script wont appen the "!" to preview the list
+*/
+
 /**
- * Function to process files with a specific extension recursively in a directory.
+ * This funtion will turn the standard URL from Markdown format to Wikilinks format, also list URLs are formatted with the "!" character to preview the list in the page
  * @param {string} baseFolderPath - The path of the base directory from where the search starts.
  * @param {boolean} commentOriginal - Option to enable/disable the Obsidian MD comment with the original URL of the resource.
  * @param {object} nameDecoration - Handles the possible prefix or sufix that may have the file
