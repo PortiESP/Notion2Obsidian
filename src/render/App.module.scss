@@ -11,7 +11,7 @@
 }
 
 .div__header{   
-    height: 100px;
+    height: 60px;
     
     display: flex;
     justify-content: space-between;
@@ -19,18 +19,18 @@
     
     padding: 0 40px;
     
-    background-color: #111;
+    background-color: #444;
     color: #eee;
 
     & h2{
-        font-size: 2em;
+        font-size: 1.8em;
         position: relative;
         display: flex;
         align-items: center;
         gap: 20px;
 
         & img{
-            width: 12%;
+            width: 35px;
             object-fit: contain;
         }
     }
@@ -41,7 +41,7 @@
         gap: 12px;
 
         background-color: #3338;
-        padding: 8px 10px;
+        padding: 6px 8px;
         border-radius: 30px;
         font-size: 1.2em;
         font-weight: 500;
@@ -51,7 +51,7 @@
             background-color: #333d;
         }
         & img{
-            width: 35px;
+            width: 30px;
             filter: invert(1);
         }
     }
