@@ -70,7 +70,7 @@ function processCSVFile(csvPath, debug=true) {
         let j = 2;
         while (j < mdLines.length && /.+: .+/.test(mdLines[j].trim())) {
           // Remove white spaces from the metadata key
-          metadaBuffer += mdLines[j].replaceAll(/\s(?=.*:)/g, "_") + "\n"
+          metadaBuffer += mdLines[j] + "\n"
           mdLines[j] = null
           
           j++;

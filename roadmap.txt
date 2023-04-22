@@ -8,3 +8,5 @@ TO-DO List:
     - Create a template of lists snippets
     - Callouts detect icon to choose callout type
     - Api
+    - Error checks for minimum options
+    - Test with recent exports
