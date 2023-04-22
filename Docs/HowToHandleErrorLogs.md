@@ -3,7 +3,7 @@
 
 The error logs provide a list of paths that failed in the process of running some script, check this paths manualy to make an idea of what caused the error, in some cases the log gives a hind about it.
 
-> Please, note that some of the errors or fails during the conversion process may be because Notion does not export the files right, in some cases there is no straigt solution that I can implement, there only possibility is that you check the original page in notion and check what should be the right result of the export. Anyway I will do my best to try to make the tool as automatic as possible to get the closest to a *Clean* export.
+> Please, note that some of the errors or fails during the conversion process may be because Notion does not export the files right, in some cases there is no straigt solution that I can implement, there only possibility is that you check the original page in notion and check what should be the right result of the export. Anyway I will do my best to try to make the tool as automatic as possible to get the closest to a *Clean* conversion.
 
 > Also notice that updates in the Notion export format or Obsidian and Dataview pluging can lead to scripts not working as expected any more.
 

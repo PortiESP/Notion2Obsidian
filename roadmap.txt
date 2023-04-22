@@ -6,19 +6,8 @@ TO-DO List:
         - Output to file formatted
     - * Advanced error detector
     - * Metadata based on files, not CSV rows
-    - App icon
     - Selectable callout type
-    - Improve UI
-        - Relevant info
-    - Header 
-        - Logos
     - Process show log
     - Create a template of lists snippets
-    - Add errors count (total and by section)
     - Callouts detect icon to choose callout type
 
-
-ADDED:
-
-    - Support nested asides
-    - Fix page links

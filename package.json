@@ -26,6 +26,7 @@
   "build": {
     "appId": "notion-2-obsidian",
     "win": {
+      "icon": "./src/render/assets/icon.png",
       "target": [
         "nsis"
       ]

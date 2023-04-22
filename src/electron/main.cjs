@@ -24,6 +24,7 @@ app.on("ready", ()=>{
     let mainWindow = new BrowserWindow({
         width: 600,
         height: 800,
+        icon: "./src/render/assets/icon.png",
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,

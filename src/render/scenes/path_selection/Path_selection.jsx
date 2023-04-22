@@ -5,9 +5,9 @@ export default function Path_selection({isPathValid, exportPath, setExportPath})
     console.log("Is path valid: ", isPathValid)
 
     return (<div className={sass.div__pathselection_wrap}>
-        <h1 className={sass.title}>🗃️Path Selection🗃️</h1>
+        <h1 className={sass.title}>🗃️ Path Selection 🗃️</h1>
         <div className={sass.div__info}>
-            <p className={sass.callout}>Extract the compressed file and select the resulting folder with your Notion export</p>
+            <p className={sass.callout}>Export your Notion workspace as Markdown & CSV, include everything and create folders for subpages. Then extract the ZIP/RAR and copy the path of the forlder here</p>
         </div>
         <div className={sass.div__form}>
             <input 

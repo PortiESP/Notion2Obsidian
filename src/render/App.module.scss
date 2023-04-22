@@ -23,7 +23,16 @@
     color: #eee;
 
     & h2{
-        font-size: 1.6em;
+        font-size: 2em;
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+
+        & img{
+            width: 12%;
+            object-fit: contain;
+        }
     }
     & > span{
         display: flex;

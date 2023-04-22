@@ -6,7 +6,7 @@ export default function Setup(props){
 
 
     return (<div className={sass.div__setup_wrap}>
-        <h1 className={sass.title}>🧰Converter Setup🧰</h1>
+        <h1 className={sass.title}>🧰 Converter Setup 🧰</h1>
         <div className={sass.div__info}>
             <p className={sass.callout}>Here you can select some additional options for your conversion, some of this options are required, others are optional</p>
         </div>
