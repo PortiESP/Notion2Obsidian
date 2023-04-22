@@ -141,6 +141,13 @@ function runScripts(e, options){
         e.sender.send("response-script-status", true)
     }
     
+
+    Object.keys(results).forEach((key) => {
+        if (results[key].data === undefined) {
+          delete results[key];
+        }
+    });
+
     e.sender.send("response-script-status", results)
     
 }
