@@ -8,6 +8,7 @@ pnpm-debug.log*
 lerna-debug.log*
 Docs/dev_notes.md
 **/test.js
+releases/*
 
 node_modules
 dist

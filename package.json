@@ -1,7 +1,9 @@
 {
   "name": "notion2obsidian",
+  "author": "Porti",
+  "description": "The program convert a export of a Notion workspace into a genreal Markdown format, aimed to be used with Obsidian",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "main": "src/electron/main.cjs",
   "scripts": {
@@ -34,6 +36,7 @@
     "files": [
       "dist/**/*",
       "src/electron/main.cjs",
+      "src/electron/**/*",
       "node_modules/**/*",
       "package.json"
     ],
