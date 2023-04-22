@@ -11,7 +11,6 @@ export default function LogViewer({logs}){
         else return value.map(e=> `[File]: ${e.file} - [Error]: ${e.error}`)
     } ).filter(e=>e)]
     parsedLogs[0] = parsedLogs.slice(1).flat()
-    console.log("*", parsedLogs)
 
     const logOptions = ["All logs", "Error renaming files", "Error moving files", "List of missing database", "Formatting URLs", "Strip asterisks", "Formatting callouts", "Generated a list from SVG files", "Metadata"]
     const [log, setLog] = useState(parsedLogs[0])
@@ -19,8 +18,8 @@ export default function LogViewer({logs}){
 
     
     const download = () => {
-        console.log("Saving results: ", results)
-        postOfficeSend("save-results", results)
+        console.log("Saving results: ", logs)
+        postOfficeSend("save-results", logs)
     }
 
 
@@ -36,7 +35,7 @@ export default function LogViewer({logs}){
             </div>
         </div>
         <div className={sass.div__list}>
-            { log.filter(e=>e.length).map((text, i) => {console.log(text, i);return <div key={i} className={sass.div__log_item}><p className={!linebreak && sass.multiline}>{text}</p></div>})}
+            { log?.filter(e=>e.length).map((text, i) => {return <div key={i} className={sass.div__log_item}><p className={!linebreak ? sass.multiline: ""}>{text}</p></div>})}
         </div> 
     </div>)
 }
