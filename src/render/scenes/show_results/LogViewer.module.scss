@@ -19,6 +19,26 @@
     
     user-select: none;
 
+    & select{
+        padding: 2px;
+        background: #555;
+        border: 2px solid none;
+        border-radius: 2px;
+        font-style: italic;
+        color: #ddd;
+        text-indent: 5px;
+        
+        & option{
+            &:checked{
+                background: #111;
+                color:#444;
+            }
+            &:nth-child(even){
+                background: #444;
+            }
+        }
+    }
+
     & .div__icons{
         display: flex;
         gap: 5px;
@@ -98,10 +118,10 @@
                 min-width: 400%;
             }
             
-            &:hover, &:nth-child(even):hover{
-                background: #645c7c;
-            }
             
+        }
+        &:hover p, &:nth-child(even):hover p{
+            background: #333;
         }
         &:nth-child(even) p{
             background: #666;
