@@ -93,3 +93,11 @@ The last screen will show the results of the conversion, some scripts may have n
 You can also click the `\n` button next to the *Save Report* button to toggle between logs in one line or wrap the whole line
 
 > I have also created a [document](https://github.com/PortiESP/Notion2Obsidian/blob/master/Docs/HowToHandleErrorLogs.md) where I describe the solutions for each error in the log.
+
+
+## Dev. Social Media 🌐
+
+- [Github](https://github.com/PortiESP)
+- [Web](https://www.0xporti.com/)
+- [Instagram](https://www.instagram.com/portii.rm/)
+- [Twitter](https://twitter.com/PortiiRM)
