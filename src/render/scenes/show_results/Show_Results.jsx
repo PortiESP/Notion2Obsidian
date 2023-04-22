@@ -1,6 +1,6 @@
 import LogViewer from "./LogViewer"
 import sass from "./Show_Results.module.scss"
-import template from "./test"
+// import template from "./test"
 
 export default function ResultsPage({results}){
     
@@ -13,7 +13,7 @@ export default function ResultsPage({results}){
                 <p className={sass.p__msg}>Check this <a className={sass.a} onClick={()=>postOfficeSend("open-url", "https://github.com/PortiESP/Notion2Obsidian/tree/master/Docs/HowToHandleErrorLogs.md")}>document</a> to know what actions you must take to handle this logs</p>
             </div>
             <div className={sass.div__viewer}>
-                <LogViewer logs={template||{}}/>
+                <LogViewer logs={results||{}}/>
             </div>
         </div>
     </div>)

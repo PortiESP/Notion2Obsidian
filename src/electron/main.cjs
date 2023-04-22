@@ -22,19 +22,19 @@ app.on("ready", ()=>{
 
     // Create main window
     let mainWindow = new BrowserWindow({
-        width: 600,
+        width: 800,
         height: 800,
         icon: "./src/render/assets/icon.png",
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
-            // devTools: true,
+            devTools: false,
+            
         },
     })
 
     // Window settings
-    // mainWindow.setMenu(null)
-    // mainWindow.webContents.openDevTools()
+    mainWindow.setMenu(null)
 
     // Load window content
     // mainWindow.loadURL("http://localhost:6969")  // DEBUG
