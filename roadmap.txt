@@ -7,7 +7,5 @@ TO-DO List:
     - Create a template of lists snippets
     - Callouts detect icon to choose callout type
     - Api
-    - Test with recent exports
-    - Error log copy path
-    - Example bug below checkbox 
-    - Fix URL algorithm for external URLs
+    - Release
+    - Failed to format metadata

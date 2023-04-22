@@ -46,19 +46,19 @@ export default function Setup(props){
                 <input type="checkbox" onChange={()=> props.setSetupOptions(old => {return {...old, urlFormatterComments:!old.urlFormatterComments}})} checked={props.setupOptions.urlFormatter && props.setupOptions.urlFormatterComments} id="ck--urlFormatter-comments" disabled={!props.setupOptions.urlFormatter}/>
                 <label htmlFor="ck--urlFormatter-comments">Keep original URLs as Obsidian MD comment</label>
             </div>
-            { props.setupOptions.wikilinks && <p className={sass.example}><span className={sass.code}>![Alt text](https://...)</span> as <span className={sass.code}>![[Alt text]]{props.setupOptions.wikilinksComments && " %% https://..."}</span></p>}
+            { props.setupOptions.urlFormatter && <p className={sass.example}><span className={sass.code}>![Alt text](https://...)</span> as <span className={sass.code}>![[Alt text]]{props.setupOptions.urlFormatterComments && " %% https://..."}</span></p>}
 
             <div className={sass.div__item} title={props.tips.stripAsterisks}>
                 <input type="checkbox" onChange={()=> props.setSetupOptions(old => {return {...old, stripAsterisks:!old.stripAsterisks}})} checked={props.setupOptions.stripAsterisks} id="ck--stripAsterisks"/>
                 <label htmlFor="ck--stripAsterisks">Strip repetitive asterisks from bold strings </label>
             </div>
-            { props.setupOptions.asterisks && <p className={sass.example}><span className={sass.code}>********boldText********</span> as <span className={sass.code}>**boldText**</span></p>}
+            { props.setupOptions.stripAsterisks && <p className={sass.example}><span className={sass.code}>********boldText********</span> as <span className={sass.code}>**boldText**</span></p>}
 
             <div className={sass.div__item} title={props.tips.calloutsFormatter}>
                 <input type="checkbox" onChange={()=> props.setSetupOptions(old => {return {...old, calloutsFormatter:!old.calloutsFormatter}})} checked={props.setupOptions.calloutsFormatter} id="ck--calloutsFormatter"/>
                 <label htmlFor="ck--calloutsFormatter">Format callouts for obsidian </label>
             </div>
-            { props.setupOptions.callouts && <p className={sass.example}><span className={sass.code}>{`<aside>My Callout</aside>`}</span> as <span className={sass.code}>{`> [!note]\\n> My Callout`}</span></p>}
+            { props.setupOptions.calloutsFormatter && <p className={sass.example}><span className={sass.code}>{`<aside>My Callout</aside>`}</span> as <span className={sass.code}>{`> [!note]\\n> My Callout`}</span></p>}
 
 
 

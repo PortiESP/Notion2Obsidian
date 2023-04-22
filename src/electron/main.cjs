@@ -22,7 +22,7 @@ app.on("ready", ()=>{
 
     // Create main window
     let mainWindow = new BrowserWindow({
-        width: 800,
+        width: 1000,
         height: 800,
         icon: "./src/render/assets/icon.png",
         webPreferences: {
@@ -64,7 +64,7 @@ function setupIPC(){
     ipcMain.on("debug", (e, data) => console.log(data))
     ipcMain.on("open-url", (e, data) => shell.openExternal(data))
     ipcMain.handle("check-path", async (e, data) => {
-        const ret = await fs.existsSync(data)
+        const ret = await fs.existsSync(data) && fs.statSync(data).isDirectory()
         await console.log("Checking path [data] = ", ret)
         return ret
     })

@@ -31,6 +31,7 @@ export default function LogViewer({logs}){
             <select onChange={e => setLog(parsedLogs[e.target.value])} defaultValue={"All logs"}>
                 {logOptions.map((label,i) => <option key={i} value={i} >{label} ({parsedLogs[i]?.length || 0})</option>)}
             </select>
+            <span className={sass.hint} >Click a log to copy</span>
             <div className={sass.div__icons}>
                 <input type="checkbox" id="icon--linebreak" onChange={()=>setLineBreak(old=>!old)} checked={linebreak}/>
                 <label htmlFor="icon--linebreak" className={sass.icon} >\n</label>
@@ -38,7 +39,13 @@ export default function LogViewer({logs}){
             </div>
         </div>
         <div className={sass.div__list}>
-            { log?.filter(e=>e?.length).map((text, i) => {return <div key={i} className={sass.div__log_item}><p className={!linebreak ? sass.multiline: ""}>{text}</p></div>})}
+            { log?.filter(e=>e?.length).map((text, i) => {return <div 
+                                                                        key={i} 
+                                                                        className={sass.div__log_item}
+                                                                        onClick={e=> navigator.clipboard.writeText(e.target.innerText)}
+                                                                    >
+                                                                        <p className={!linebreak ? sass.multiline: ""}>{text}</p>
+                                                                    </div>})}
         </div> 
     </div>)
 }

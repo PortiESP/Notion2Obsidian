@@ -1,7 +1,5 @@
 import LogViewer from "./LogViewer"
 import sass from "./Show_Results.module.scss"
-import template from "./test"
-// import template from "./test"
 
 export default function ResultsPage({results}){
     
