@@ -20,7 +20,7 @@
 
 ### Download the release version
 
-Go to the github repo and download the binary marked as *release*, in the aside section of the page
+Go to the github repo and download the binary marked as *release*, in the [aside section](https://i.gyazo.com/650217b495c33028a2760ee02bde7a7b.png) of the page and download the `.exe` binary
 
 ### Export you Notion workspace
 
