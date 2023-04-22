@@ -1,5 +1,7 @@
 import LogViewer from "./LogViewer"
 import sass from "./Show_Results.module.scss"
+import {postOfficeSend} from "@/components/postOffice"
+
 
 export default function ResultsPage({results}){
     
