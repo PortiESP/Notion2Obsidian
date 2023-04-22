@@ -29,7 +29,7 @@ export default function LogViewer({logs}){
     return (<div className={sass.div__wrap}>
         <div  className={sass.div__header}>
             <select onChange={e => setLog(parsedLogs[e.target.value])} defaultValue={"All logs"}>
-                {logOptions.map((label,i) => <option key={i} value={i} >{label} ({logs ? Object.values(logs).map(e=>e.data).reduce((accum, list)=>[...accum, ...list]).length : 0})</option>)}
+                {logOptions.map((label,i) => <option key={i} value={i} >{label} ({parsedLogs[i]?.length || 0})</option>)}
             </select>
             <div className={sass.div__icons}>
                 <input type="checkbox" id="icon--linebreak" onChange={()=>setLineBreak(old=>!old)} checked={linebreak}/>

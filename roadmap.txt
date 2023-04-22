@@ -2,11 +2,9 @@
 TO-DO List:
 
     - * Advanced error detector
-    - * Metadata based on files, not CSV rows
     - Selectable callout type
     - Process show log
     - Create a template of lists snippets
     - Callouts detect icon to choose callout type
     - Api
-    - Error checks for minimum options
     - Test with recent exports
