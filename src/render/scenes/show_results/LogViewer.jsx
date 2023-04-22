@@ -5,14 +5,17 @@ import {postOfficeSend} from "@/components/postOffice"
 
 export default function LogViewer({logs}){
 
-    const parsedLogs = [ undefined, ...Object.values(logs)?.map( value => {
-        if (value.length === 0) return null
-        else if (value[0].length !== undefined) return value  // isArray
-        else return value.map(e=> `[File]: ${e.file} - [Error]: ${e.error}`)
-    } ).filter(e=>e)]
+    const logOptions = ["All logs", ...Object.values(logs).map(e=>e.label)]
+    const parsedLogs = [ undefined, ...Object.values(logs)?.map( (e) => {
+        const {_, data} = e
+        // Flatting array of data
+        if (data.length === 0) return null
+        else if (data[0].length !== undefined) return data  // isArray
+        else return data.map(e=> `[File]: ${e.file} - [Error]: ${e.error}`)
+    } )]
+    // Use the first index to store a full list of all the logs
     parsedLogs[0] = parsedLogs.slice(1).flat()
 
-    const logOptions = ["All logs", "Error renaming files", "Error moving files", "List of missing database", "Formatting URLs", "Strip asterisks", "Formatting callouts", "Generated a list from SVG files", "Metadata"]
     const [log, setLog] = useState(parsedLogs[0])
     const [linebreak, setLineBreak] = useState(true)
 
@@ -26,7 +29,7 @@ export default function LogViewer({logs}){
     return (<div className={sass.div__wrap}>
         <div  className={sass.div__header}>
             <select onChange={e => setLog(parsedLogs[e.target.value])} defaultValue={"All logs"}>
-                {logOptions.map((label,i) => <option key={i} value={i} >{label} ({parsedLogs[i]?.length})</option>)}
+                {logOptions.map((label,i) => <option key={i} value={i} >{label} ({parsedLogs[i]?.length || 0})</option>)}
             </select>
             <div className={sass.div__icons}>
                 <input type="checkbox" id="icon--linebreak" onChange={()=>setLineBreak(old=>!old)} checked={linebreak}/>
@@ -35,7 +38,7 @@ export default function LogViewer({logs}){
             </div>
         </div>
         <div className={sass.div__list}>
-            { log?.filter(e=>e.length).map((text, i) => {return <div key={i} className={sass.div__log_item}><p className={!linebreak ? sass.multiline: ""}>{text}</p></div>})}
+            { log?.filter(e=>e?.length).map((text, i) => {return <div key={i} className={sass.div__log_item}><p className={!linebreak ? sass.multiline: ""}>{text}</p></div>})}
         </div> 
     </div>)
 }

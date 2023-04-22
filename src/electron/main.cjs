@@ -28,13 +28,13 @@ app.on("ready", ()=>{
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
-            devTools: false,
+            // devTools: false,
             
         },
     })
 
     // Window settings
-    mainWindow.setMenu(null)
+    // mainWindow.setMenu(null)
 
     // Load window content
     // mainWindow.loadURL("http://localhost:6969")  // DEBUG
@@ -79,14 +79,14 @@ function runScripts(e, options){
 
     // Returned data
     const results = {
-        removeHashLogs: undefined,
-        moveToFolderLogs: undefined,
-        findMissingDBsLogs: undefined,
-        urlFormatterLogs: undefined,
-        stripAsterisksLogs: undefined,
-        calloutsFormatterLogs: undefined,
-        genListFilesLogs: undefined,
-        metadataFormatterLogs: undefined,
+        removeHashLogs: { label:"Errors removing hash from files", data: undefined},
+        moveToFolderLogs: { label:"Errors moving files to matching folders", data: undefined},
+        findMissingDBsLogs: { label:"Missing Databases", data: undefined},
+        urlFormatterLogs: { label:"Errors formatting URLs", data: undefined},
+        stripAsterisksLogs: { label:"Asterisk chains found in the file (bolds)", data: undefined},
+        calloutsFormatterLogs: { label:"Aside tags found in the file (callouts)", data: undefined},
+        genListFilesLogs: { label:"Error generating list files from SVGs", data: undefined},
+        metadataFormatterLogs: { label:"Failed to format metadata", data: undefined},
     }
 
     console.log("Running scripts: ", options)
@@ -95,49 +95,49 @@ function runScripts(e, options){
     
     if (options.removeHash){
         e.sender.send("response-script-status", "Renaming files and folders...")
-        results.removeHashLogs = removeHash(options.exportPath, true)
+        results.removeHashLogs.data = removeHash(options.exportPath, true)
         e.sender.send("response-script-status", true)
     }
     
     if (options.findMissingDBs){
         e.sender.send("response-script-status", "Finding missing databases...")
-        results.findMissingDBsLogs = searchFilesByName(options.exportPath, "Untitled Database.md", true)
+        results.findMissingDBsLogs.data = searchFilesByName(options.exportPath, "Untitled Database.md", true)
         e.sender.send("response-script-status", true)
     }
     
     if (options.moveToFolder){
         e.sender.send("response-script-status", "Moving files to matching folder...")
-        results.moveToFolderLogs = moveFilesToMatchingFolder(options.exportPath, true)
+        results.moveToFolderLogs.data = moveFilesToMatchingFolder(options.exportPath, true)
         e.sender.send("response-script-status", true)
     }
     
     if (options.stripAsterisks){
         e.sender.send("response-script-status", "Stripping asterisks from files content...")
-        results.stripAsterisksLogs = stripAsterisks(options.exportPath, true)
+        results.stripAsterisksLogs.data = stripAsterisks(options.exportPath, true)
         e.sender.send("response-script-status", true)
     }
     
     if (options.calloutsFormatter){
         e.sender.send("response-script-status", "Formatting callouts...")
-        results.calloutsFormatterLogs = calloutFormatter(options.exportPath, true)
+        results.calloutsFormatterLogs.data = calloutFormatter(options.exportPath, true)
         e.sender.send("response-script-status", true)
     }
     
     if (options.genListFiles){
         e.sender.send("response-script-status", "Generating list files...")
-        results.genListFilesLogs = generateListFiles(options.exportPath, {prefix: options.listNamePrefix, sufix: options.listNameSufix}, true)
+        results.genListFilesLogs.data = generateListFiles(options.exportPath, {prefix: options.listNamePrefix, sufix: options.listNameSufix}, true)
         e.sender.send("response-script-status", true)
     }
     
     if (options.metadataFormatter){
         e.sender.send("response-script-status", "Generating metadata in the list files...")
-        results.metadataFormatterLogs = metadataFormatter(options.exportPath, true)
+        results.metadataFormatterLogs.data = metadataFormatter(options.exportPath, true)
         e.sender.send("response-script-status", true)
     }
 
     if (options.urlFormatter){
         e.sender.send("response-script-status", "Formating URLs as wikilinks format...")
-        results.urlFormatterLogs = urlFormatter(options.exportPath, true, {prefix: options.listNamePrefix, sufix: options.listNameSufix}, true)
+        results.urlFormatterLogs.data = urlFormatter(options.exportPath, true, {prefix: options.listNamePrefix, sufix: options.listNameSufix}, true)
         e.sender.send("response-script-status", true)
     }
     
