@@ -82,9 +82,9 @@
         display: inline-block;
         & p{
 
-            min-width: 400%;
+            min-width: 100%;
             max-width: 1500px;
-
+            
             text-align: start;
             color: #eee;
             font-size: .7em;
@@ -92,9 +92,10 @@
             font-family: monospace;
             background-color: #555;
             padding: 2px 4px 1px;
-
+            
             &.multiline{
                 white-space: nowrap;
+                min-width: 400%;
             }
             
             &:hover, &:nth-child(even):hover{
