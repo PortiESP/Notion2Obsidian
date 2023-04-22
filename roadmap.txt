@@ -1,9 +1,6 @@
 
 TO-DO List:
 
-    - * Better Error log
-        - Interactive in-app error check
-        - Output to file formatted
     - * Advanced error detector
     - * Metadata based on files, not CSV rows
     - Selectable callout type
