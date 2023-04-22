@@ -55,7 +55,6 @@ function processCSVFile(csvPath, debug=true) {
       mdPath += ".md";
     }
 
-
     // Check if the Markdown file path exists
     if (fs.existsSync(mdPath) && fs.statSync(mdPath).isFile()) {
       // Read the current content of the Markdown file

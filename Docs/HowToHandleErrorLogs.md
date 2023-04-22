@@ -93,6 +93,6 @@ Characters like "`(`", "`.`", "`:`", ...; In the name of the file or the attribu
 
 ## Format Notions page attributes as Obsidian's note metadata `metadataFormatterLogs`
 
-The algorithm may fail detecting the path where the page of the item in a list is located and could not prase the metadata of that specific file.
+The algorithm may fail detecting the path where the page of the item in a list is located because, file is located deeper than expected, file was remove on descompression by the Windows Defender (*in may case it blocked some files with PHP payloads*), also "`,`" and other symbols in the name can cause the algorithm to not find the original file.
 
 > **FIX:** Check thoose files and wrap the metadata between `---`, also enside to move the metadata to the first line on the file (even above the title).
