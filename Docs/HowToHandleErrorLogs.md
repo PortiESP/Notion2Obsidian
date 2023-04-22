@@ -10,7 +10,7 @@ The error logs provide a list of paths that failed in the process of running som
 
 --------------------
 
-## Strings from hash names `removeHashLogs`
+## Strip hash from hash names `removeHashLogs`
 
 Some files might trigger errors because of the lack of privileges over the directory, check if other process is using the same resource while you are running the app, but also in my case I've noticed that this could be because there is already a file with that name (dont know why) so the file with the hash cant be renamed.
 

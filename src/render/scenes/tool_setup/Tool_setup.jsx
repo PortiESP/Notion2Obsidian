@@ -19,7 +19,7 @@ export default function Setup(props){
 
             <div className={sass.div__item} title={props.tips.removeHash}>
                 <input type="checkbox" disabled onChange={()=> props.setSetupOptions(old => {return {...old, removeHash:!old.removeHash}})} checked={props.setupOptions.removeHash} id="ck--name-hash"/>
-                <label htmlFor="ck--name-hash">String hash from file names </label>
+                <label htmlFor="ck--name-hash">Strip hash from file names </label>
             </div>
             { props.setupOptions.removeHash && <p className={sass.example}><span className={sass.code}>myNote b6d4gh6gh46dr4vzx328u8u.md</span> as <span className={sass.code}>myNote.md</span></p>}
 

@@ -153,8 +153,7 @@ function saveResults(e, results){
         buttonLabel: 'Save',
         defaultPath: '~/Documents/',
         filters: [
-        { name: 'Text Files', extensions: ['txt'] },
-        { name: 'All Files', extensions: ['*'] }
+            { name: 'All Files', extensions: ['*'] }
         ]
     }).then(res => {
         if (!res.canceled) {
