@@ -8,3 +8,6 @@ TO-DO List:
     - Callouts detect icon to choose callout type
     - Api
     - Test with recent exports
+    - Error log copy path
+    - Example bug below checkbox 
+    - Fix URL algorithm for external URLs

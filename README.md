@@ -1,241 +1,95 @@
-# ObsidianConverter
+
+# Notion2Obsidian
+
+> This APP is a conversor for Notion exports to Markdown syntax
+
+### Features 🧰
+
+- 🖼️ Friendly GUI
+- ⚙️ Automatic scripts
+- 🔍 Error detection
+
+## Disclaimer ⚠️
+
+- 🧪 This is a beta version of the project, visit the [Github page](https://github.com/PortiESP/Notion2Obsidian/) to stay updated
+- 🕷️ Please report any issues or bugs in the [issues](https://github.com/PortiESP/Notion2Obsidian/issues) section of the github page
+- 🔨 Note that updates in the Notion export format may break some features, please report that in the Github issues in that case
+- ♻️ This tool is will try to make a clean conversion but it is not 100% accurate, I've done my best to make the closest to a clean conversion
+
+## Download & Export 📥
+
+### Download the release version
+
+Go to the github repo and download the binary marked as *release*, in the aside section of the page
+
+### Export you Notion workspace
+
+In Notion, got to the *Settings & Memebers* menu in the side pannel, there go to *Settings* and the click on **Export all workspace content**
+
+Export your workspace with the following parameters
+- Export format: *Mardown & CSV*
+- Include databases: *Everything*
+- Include content: *Everything*
+- Create forders for subpages: ON (*toggle in blue*)
+
+Wait until the export is completed and save the ZIP where you want. Then go to the path where you have a¡saved your export and decompress it, (*copy the path of the resulting folder for the following steps*)
 
 
+## Run the APP ⚙️
 
-## Conversion algorithms
-
-### Rename files
-
-> This script must be executed with *powershell* and in the path where we want to perform the recursive renaming, it will also create a `errors.txt` file in the current directory where it will write the paths that had some issues renaming (*usually files with the same name in the same path, you must rename thoose yourself since obsidian doesnt support duplicated names in the same path*)
-
-```powershell
-Get-ChildItem -Recurse | Where-Object { $_.Name -match '.*\.md$|.*\.csv$|^(?!.*\.[a-zA-Z0-9]+$).+$' } | Sort-Object { $_.FullName.Length } -Descending | ForEach-Object {
-    $oldName = $_.FullName
-    $newName = $_.FullName -replace '([\w\s\(\)]+) \w{32}(\.md|\.csv)?$', '$1$2'
-    if ($oldName -ne $newName) {
-        try {
-            Rename-Item -Path $oldName -NewName $newName -ErrorAction Stop
-            Write-Host "Archivo original: $oldName"
-            Write-Host "Archivo renombrado: $newName"
-        } catch {
-            $errorMessage = $_.Exception.Message
-            Write-Host "Error al renombrar archivo: $errorMessage"
-            Add-Content -Path errors_renaming.txt -Value "Archivo original: $oldName - Error: $errorMessage"
-        }
-    } else {
-        Write-Host "Archivo original: $oldName no requiere ser renombrado."
-    }
-}
-```
-
-### Mover a la carpeta con su nombre
-
-> Este script mueve los archivos que tengan una carpeta con su mismo nombre en su mismo nivel a esta carpeta
-
-```powershell
-Get-ChildItem -Recurse | Where-Object { $_.Extension -eq ".md" -or $_.Extension -eq ".csv" } | ForEach-Object {
-    $file = $_
-    $destinationFolder = Join-Path -Path $file.DirectoryName -ChildPath $file.BaseName
-    if (Test-Path $destinationFolder) {
-        try{
-            $newName = Join-Path -Path $destinationFolder -ChildPath ($file.BaseName + $file.Extension)
-            Move-Item -Path $file.FullName -Destination $newName -ErrorAction Stop
-            Write-Host "Archivo movido: $($file.FullName) --> $($newName)"
-        } catch{
-            $errorMessage = $_.Exception.Message
-            Write-Host "Error al renombrar archivo: $errorMessage"
-            Add-Content -Path errors_moving.txt -Value "Archivo original: $file - Error: $errorMessage"
-        }
-    }
-}
-```
+Run the application and follow the steps for each menu:
 
 
-### Callout formatter
+#### 1 - Path Selection
 
-> This script will format the files and replaceing the Notion callout block to the Obsidian version
+In the *Path Selection* view, paste the path of the decompressed ZIP (*the one that we have copyed earlier*)
 
-```powershell
-Get-ChildItem -recurse | Where-Object { $_.extension -eq '.md' } | ForEach-Object {
-    $content = Get-Content $_.FullName -Raw
-    $matchResults = $content | Select-String -Pattern "<aside>\n*([\s\S]*?)</aside>" -AllMatches
-    if ($matchResults.Matches.Count -gt 0) {
-        # El patrón coincidió, se extrae el substring
-        $updatedContent = $content
-        foreach ($match in $matchResults.Matches){
-            $grupo = $match.Groups[1].Value 
-            #$grupo = $grupo -replace "\r?\n$", ""
-            $parsed = "> [!note]`n" + $grupo -replace "`n", "`n>"
-            $updatedContent = $updatedContent -replace [regex]::Escape($match.Value), $parsed
-        }
-        Set-Content $_.FullName -Value $updatedContent
-        Write-Host "Reemplazo realizado en: $($_.FullName)"
-    } else {
-        # El patrón no coincidió
-        Write-Host "Sin coincidencias en: $($_.FullName)"
-    }
-}
-```
+#### 2 - Converter Setup
 
-### Detect missing DBs
+In the menu we can choose what options to enable for the conversion, I recommended to check all of them for a cleaner conversion
 
-Write in a `missingDBs.txt` file a list of databases that are not exported. This issue happens in linked databases, databases that are not the original one but a view of the original
+> **Strip hash from file names**
+> This option will remove the hash from all the files and folders in the export. This option is required by other options so it is not uncheckable.
+> *E.G.:* `myNote b6d4gh6gh46dr4vzx328u8u.md` as `myNote.md`
 
-```powershell
-Get-ChildItem -Recurse -Filter "Untitled Database.md" | ForEach-Object { $_.FullName } > missingDBs.txt
-```
+> **Move files to matching folders**
+> This option will search for files that are located at the same level of a folder with its own name, this option is here because Notion generates a file for each page, and a folder for its child content. This option is required by other options so it is not uncheckable.
+> *E.G.:* `./myNote.md` as `./myNote/myNote.md`
 
-### Formatting URLs
+> **Generate a list of missing databases**
+> When Notions exports a page that contained a reference to other list in the content, Notion does not write a URL in the page to the original list, instead a file named `Untitled Database.md`, this seems to be a bug from Notion and I hope they will fix it on future updates
 
-> The URLs will be formatted, but the original URL will be keept in a comment in case of there is some issue with the resource path
+> **Format URL/Img as Wikilinks**
+> This option will find all ocurrences of URLs in the markdown files and replace them to a *Wikilinks* format (*External URLs are not conversed*).
+> *E.G.:* `[My Note](path/to/note/note.md)` as `[[My Note]]`
+> *E.G.:* `[My image](path/to/image.png)` as `[[image.png]]`
 
-```powershell
-Get-ChildItem -Recurse | Where-Object { $_.Extension -eq '.md' } | ForEach-Object {
-    $archivo = $_.FullName
-    Write-Host "Procesando archivo: $archivo"
-    $contenido = Get-Content $archivo -Raw
-    $contenido = $contenido -replace '(!?)\[(.+?)\]\(([^)]+)\)', '$1[[$2]] %% $3'
-    Set-Content $archivo $contenido
-}
-```
+> **Strip repetitive asterisks from bold strings**
+> Replace all ocurrences of bold strings wrapped between excessive astterisks by the same string wrapped only between two of thoose.
+> *E.G.:* `***********bold***********` as `**bold**`
 
-> We can remove the comments with the pattern `s/(?!\[\[.+\]\]) +%%.*//g`
+> **Format callouts for obsidian**
+> Replace the callouts generated by notion as `<aside>` tags by th Obsidian supported ones as `> [!note]`, also support nested callouts
 
-```powershell
-$archivos = Get-ChildItem -File -Recurse -Include *.md
+> **Generate a list of SVG files**
+> Search for every page that have a `.svg` file generated, extract the data and generate a list in Dataview to fetch the pages from the parsed SVG file
+> > You must have installed *Dataview* plugin and also enable the both *DataviewJS* options in settings.
+> > ![Obsidian settings screenshoot](https://i.gyazo.com/8e2000df60cc72c0af585b77238ce908.png)
 
-# Iterar a través de cada archivo
-foreach ($archivo in $archivos) {
-    # Leer el contenido del archivo
-    $contenido = Get-Content $archivo.FullName -Raw
-
-    # Aplicar la expresión regular y reemplazar el contenido del archivo
-    $contenidoActualizado = $contenido -replace '(?!\[\[.+\]\]) +%%.*', ''
-
-    # Escribir el contenido actualizado en el archivo
-    Set-Content $archivo.FullName -Value $contenidoActualizado
-
-    Write-Host "Expresión regular aplicada en: $($archivo.FullName)"
-}
-```
-
-### Removing multiple `*`
-
-> Removes the duplicated `*` characters such as: "\*\*\*\*\*\*\*\*\*\*\***bold**\*\*\*\*\*\*\*\*\*\*\*\*\*"
-
-```powershell
-Get-ChildItem -File -Recurse -Include *.md | ForEach-Object {
-    $archivo = $_.FullName
-    Write-Host "Procesando archivo: $archivo"
-    $contenido = Get-Content $archivo -Raw
-    $contenido = $contenido -replace '\*+\*([^\*]+)\*\*+', '**$1**'
-    Set-Content $archivo $contenido
-}
-```
-
-### Tablas/Listas
-
-Hacer la tabla donde exista un .csv
-	- La tabla se hace de los .md en la ruta del .csv y recursivo
-	- Los datos del .csv se deben añadir como atributos a cada pagina, cada entrada del .csv coincidirá con un .md 
-
-```python
-import os, csv
-
-# Directorio raíz donde se realizará la búsqueda recursiva
-directorio_raiz = r"C:\Users\Porti\Desktop\CONVERT\Export-9f787dd1-7f28-4ead-9fa1-421bbef21fbf-Part-1\Export-9f787dd1-7f28-4ead-9fa1-421bbef21fbf\Software docs\Apps & Topics\Blender\Blender Concepts\Nodes\Nodes list"
-
-# Lista para almacenar los archivos CSV encontrados
-archivos_csv = []
-
-# Recorrer los directorios, subdirectorios y archivos dentro del directorio raíz
-for directorio_actual, _, archivos in os.walk(directorio_raiz):
-    for archivo in archivos:
-        if archivo.endswith(".csv"):
-            # Si es un archivo CSV, agregarlo a la lista
-            ruta_csv = os.path.join(directorio_actual, archivo)
-            archivos_csv.append(ruta_csv)
-
-# Recorrer los archivos CSV encontrados
-for archivo_csv in archivos_csv:
-    # Obtener el nombre base del archivo CSV sin la extensión
-    nombre_base = os.path.splitext(os.path.basename(archivo_csv))[0]
-
-    # Obtener los headers
-    with open(archivo_csv, "r") as f:
-        lector_csv = csv.reader(f)
-        primera_fila = next(lector_csv)
-    
-
-    # Crear el archivo MD con el mismo nombre pero con extensión .md
-    archivo_md = archivo_csv.replace(".csv", ".md")
-    with open(archivo_md, "w") as f:
-        # Escribir el contenido deseado en el archivo MD
-        contenido = f"""```dataview
-TABLE {", ".join(primera_fila[1:])}
-FROM ""
-WHERE contains(file.path, "{nombre_base}/")
-```"""
-        f.write(contenido)
-
-print("Archivos MD creados exitosamente!")
-
-```
+> **Format Notions page attributes as Obsidian's note metadata**
+> This option will find metadata in the exported files, wrap it between `---` and move it to the top of the file so Obsidian can recognise it as the note metadata
 
 
-### Añadir metadatos de los csv a los archivos
+#### 3 - Running 👨‍💻
 
-```python
-import csv
-import os
+At this point we should wait for the scripts to finish running, in my case, with a workspace of around 3000 pages, the APP took less than 30 seconds to finish but depends on your hardware and the size of your workspace. Also, dont panic if the application says *Not responding* it is working on the scripts and blocks the APP main loop while on it.
 
-# Ruta del archivo CSV
-ruta_lista = r"RUTA/DE/LA/CARPETA"
-ruta_csv = os.path.join(ruta_lista, os.path.basename(ruta_lista) + ".csv")
+#### 4 - Error Log 🕷️
 
-# Ruta del archivo de registro
-ruta_log = os.path.join(ruta_lista, "log_lista.txt")
+The last screen will show the results of the conversion, some scripts may have not worked as expected or returned some errors, here you can check in the explorer the path and error logs of the files that returned some kind of error that require your attention
 
-# Leer el archivo CSV y agregar el contenido como atributos de Obsidian
-with open(ruta_csv, "r") as archivo_csv:
-    lector_csv = csv.reader(archivo_csv)
-    # Ignorar la primera fila (encabezados)
+> **⚠️IMPORTANT:** Save the log in a TXT file (💾 Save Report) before clicking the *Finish* button, in other case you will not be able to recover the error log.
 
-    headers = next(lector_csv)[1:]
-    for fila in lector_csv:
-        # Obtener el nombre del archivo Markdown y el contenido de la fila
-        nombre_md = fila[0] + ".md"
+You can also click the `\n` button next to the *Save Report* button to toggle between logs in one line or wrap the whole line
 
-        # Ruta completa del archivo Markdown
-        ruta_md = os.path.join(ruta_lista, fila[0], nombre_md)
-
-        # Verificar si la ruta del archivo Markdown existe
-        if os.path.exists(ruta_md):
-            # Leer el contenido actual del archivo Markdown
-            with open(ruta_md, "r") as archivo_md:
-                lineas_md = archivo_md.readlines()
-
-            i = 2  # Línea 3
-            while i < len(lineas_md):
-                if not lineas_md[i].strip(): # Si la línea está vacía
-                    if i != 2: lineas_md[i-1] += '---\n'
-                    break 
-                    
-                if i == 2 and ":" in lineas_md[2] : lineas_md[1] += '---\n'
-                else: break  # Si no son metadataos 
-                i += 1
-
-            # Escribir el contenido actualizado en el archivo Markdown
-            with open(ruta_md, "w") as archivo_md:
-                archivo_md.writelines(lineas_md)
-
-            print(f"Metadatos agregados en el archivo Markdown {nombre_md}")
-        else:
-            print(f"El archivo Markdown {nombre_md} no existe. Registrando en el archivo de log.")
-            # Registrar en el archivo de log
-            with open(ruta_log, "a") as archivo_log:
-                archivo_log.write(f"[Archivo no encontrado]: {ruta_md}")
-
-print("Proceso completado exitosamente!")
-
-```
+> I have also created a [document](https://github.com/PortiESP/Notion2Obsidian/blob/master/Docs/HowToHandleErrorLogs.md) where I describe the solutions for each error in the log.

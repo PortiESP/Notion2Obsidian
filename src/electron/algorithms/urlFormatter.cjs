@@ -36,6 +36,9 @@ module.exports = function urlFormatter(baseFolderPath, commentOriginal=true, nam
         // Perform pattern replacement in the file content
         const newContent = content.replace(/(!?)\[(.+?)\]\(([^)]+\.(.+))\)/g, (match, g1, g2, g3, g4)=>{
 
+          // Skipt for external URLs
+          if (/^http/.test(g3)) return match
+
           let {prefix, sufix} = nameDecoration
           prefix = prefix?prefix:""
           sufix = sufix?sufix:""

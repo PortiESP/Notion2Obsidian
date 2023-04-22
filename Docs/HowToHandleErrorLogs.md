@@ -30,6 +30,7 @@ Same issue as the above error, check the privileges or ensure that no other proc
 ## Generate a list with missing databases `findMissingDBsLogs`
 
 This files appear when in that same directory, other note was referencing a list that was not the original list but a reference of other list (*see the image below*). In this case Notion fails to export that file with an URL to the original database (list) and instead it gererates this file named `'Untitled Database.md'`.
+
 ![Example Screenshoot 1](https://i.gyazo.com/e6d9d57ab8f4b98047c3700e5a80f6e2.png)
 
 > **FIX:** Check in Notion what page in that path had a reference to other list and add yourself the wikilink with the URL of that list: `![[Original List.md]]`.

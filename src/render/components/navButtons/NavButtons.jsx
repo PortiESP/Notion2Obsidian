@@ -11,7 +11,7 @@ export default function NavButtons({scene, setScene, isPathValid, results, setup
     }
 
     const btnBackNames = ["", "Back", "Back", "Back", "", ""]
-    const btnContNames = ["Continue", "Continue", "Continue", "Convert", "View results", "Finish"]
+    const btnContNames = ["Continue", "Continue", "Continue", "Convert", "View results", "Finish 🏁"]
 
     return (<>
         <div className={sass.div__buttons_wrap}>
