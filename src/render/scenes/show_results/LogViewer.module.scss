@@ -53,6 +53,7 @@
 
     display: flex;
     flex-wrap: wrap;
+    align-content: flex-start;
     height: 100%;
     overflow: scroll;
     
@@ -78,10 +79,9 @@
     }
     
     & .div__log_item { 
+        display: inline-block;
         & p{
-            display: block;
 
-            display: inline-block;
             min-width: 400%;
             max-width: 1500px;
 

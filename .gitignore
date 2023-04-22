@@ -7,6 +7,7 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 Docs/dev_notes.md
+**/test.js
 
 node_modules
 dist
