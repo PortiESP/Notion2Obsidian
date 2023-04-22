@@ -1,11 +1,11 @@
 
 # How to handle the results of the logs
 
-The error logs provide a list of paths that failed in the process of running some script, check this paths manualy to make an idea of what caused the error, in some cases the log gives a hind about it.
+The error logs provide a list of paths that failed in the process of running some script, check this paths manually to make an idea of what caused the error, in some cases the log gives a hind about it.
 
-> Please, note that some of the errors or fails during the conversion process may be because Notion does not export the files right, in some cases there is no straigt solution that I can implement, there only possibility is that you check the original page in notion and check what should be the right result of the export. Anyway I will do my best to try to make the tool as automatic as possible to get the closest to a *Clean* conversion.
+> Please, note that some of the errors or fails during the conversion process may be because Notion does not export the files right, in some cases there is no straight solution that I can implement, there only possibility is that you check the original page in notion and check what should be the right result of the export. Anyway I will do my best to try to make the tool as automatic as possible to get the closest to a *Clean* conversion.
 
-> Also notice that updates in the Notion export format or Obsidian and Dataview pluging can lead to scripts not working as expected any more.
+> Also notice that updates in the Notion export format or Obsidian and Dataview plugin can lead to scripts not working as expected any more.
 
 
 --------------------
@@ -14,7 +14,7 @@ The error logs provide a list of paths that failed in the process of running som
 
 Some files might trigger errors because of the lack of privileges over the directory, check if other process is using the same resource while you are running the app, but also in my case I've noticed that this could be because there is already a file with that name (dont know why) so the file with the hash cant be renamed.
 
-I hope that the files with this error are the minimal, I my case only very few of the files returned this error.
+I hope that the files with this error are the minimal, in my case only very few of the files returned this error.
 
 --------------------
 
@@ -29,7 +29,7 @@ Same issue as the above error, check the privileges or ensure that no other proc
 
 ## Generate a list with missing databases `findMissingDBsLogs`
 
-This files appear when in that same directory, other note was referencing a list that was not the original list but a reference of other list (*see the image below*). In this case Notion fails to export that file with an URL to the original database (list) and instead it gererates this file named `'Untitled Database.md'`.
+This files appear when in that same directory, other note was referencing a list that was not the original list but a reference of other list (*see the image below*). In this case Notion fails to export that file with an URL to the original database (list) and instead it generates this file named `'Untitled Database.md'`.
 
 ![Example Screenshoot 1](https://i.gyazo.com/e6d9d57ab8f4b98047c3700e5a80f6e2.png)
 
@@ -54,7 +54,7 @@ Notion sometimes does not make export clean exports, and it place some extra arr
 
 > **Powershell script to remove the asterisks (windows)**
 >
-> > IMPORTANT: You should never run a script without analyzing it first or it comes from a reliable source, I will always recomment to ask **ChatGPT** for potential dangers of each script before running any unknown script from any unknown source.
+> > IMPORTANT: You should never run a script without analyzing it first or it comes from a reliable source, I will always recommend to ask **ChatGPT** for potential dangers of running any unknown script from any unknown source before executing it.
 > 
 > Here I have a powershell script for you to remove all chains of 3 or more consecutive '*'.
 > *HOW TO USE IT:*
