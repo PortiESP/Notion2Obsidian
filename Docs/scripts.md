@@ -1,12 +1,12 @@
 # ObsidianConverter
 
 
+> This scripts are the ones I've written before translating to JS, you can use one of thoose if you dont want to use the app but they are not updated with the most recent fixes
 
-## Conversion algorithms
 
-### Rename files
+## Rename files
 
-> This script must be executed with *powershell* and in the path where we want to perform the recursive renaming, it will also create a `errors.txt` file in the current directory where it will write the paths that had some issues renaming (*usually files with the same name in the same path, you must rename thoose yourself since obsidian doesnt support duplicated names in the same path*)
+> This script must be executed with PowerShell and in the path where we want to perform the recursive renaming. It will also create an errors.txt file in the current directory where it will write the paths that had some issues renaming (usually files with the same name in the same path). You must rename those yourself since Obsidian doesn't support duplicated names in the same path.
 
 ```powershell
 Get-ChildItem -Recurse | Where-Object { $_.Name -match '.*\.md$|.*\.csv$|^(?!.*\.[a-zA-Z0-9]+$).+$' } | Sort-Object { $_.FullName.Length } -Descending | ForEach-Object {
@@ -15,22 +15,22 @@ Get-ChildItem -Recurse | Where-Object { $_.Name -match '.*\.md$|.*\.csv$|^(?!.*\
     if ($oldName -ne $newName) {
         try {
             Rename-Item -Path $oldName -NewName $newName -ErrorAction Stop
-            Write-Host "Archivo original: $oldName"
-            Write-Host "Archivo renombrado: $newName"
+            Write-Host "Original file: $oldName"
+            Write-Host "New file: $newName"
         } catch {
             $errorMessage = $_.Exception.Message
-            Write-Host "Error al renombrar archivo: $errorMessage"
-            Add-Content -Path errors_renaming.txt -Value "Archivo original: $oldName - Error: $errorMessage"
+            Write-Host "Error renaming the file: $errorMessage"
+            Add-Content -Path errors_renaming.txt -Value "Original file: $oldName - Error: $errorMessage"
         }
     } else {
-        Write-Host "Archivo original: $oldName no requiere ser renombrado."
+        Write-Host "Original file: $oldName does not need to be renamed."
     }
 }
 ```
 
-### Mover a la carpeta con su nombre
+## Move file to a folder
 
-> Este script mueve los archivos que tengan una carpeta con su mismo nombre en su mismo nivel a esta carpeta
+> This script moves files that have a folder with the same name at the same level to this folder.
 
 ```powershell
 Get-ChildItem -Recurse | Where-Object { $_.Extension -eq ".md" -or $_.Extension -eq ".csv" } | ForEach-Object {
@@ -40,18 +40,18 @@ Get-ChildItem -Recurse | Where-Object { $_.Extension -eq ".md" -or $_.Extension 
         try{
             $newName = Join-Path -Path $destinationFolder -ChildPath ($file.BaseName + $file.Extension)
             Move-Item -Path $file.FullName -Destination $newName -ErrorAction Stop
-            Write-Host "Archivo movido: $($file.FullName) --> $($newName)"
+            Write-Host "File moved: $($file.FullName) --> $($newName)"
         } catch{
             $errorMessage = $_.Exception.Message
-            Write-Host "Error al renombrar archivo: $errorMessage"
-            Add-Content -Path errors_moving.txt -Value "Archivo original: $file - Error: $errorMessage"
+            Write-Host "Error renaming file: $errorMessage"
+            Add-Content -Path errors_moving.txt -Value "Original file: $file - Error: $errorMessage"
         }
     }
 }
 ```
 
 
-### Callout formatter
+## Callout formatter
 
 > This script will format the files and replaceing the Notion callout block to the Obsidian version
 
@@ -69,15 +69,15 @@ Get-ChildItem -recurse | Where-Object { $_.extension -eq '.md' } | ForEach-Objec
             $updatedContent = $updatedContent -replace [regex]::Escape($match.Value), $parsed
         }
         Set-Content $_.FullName -Value $updatedContent
-        Write-Host "Reemplazo realizado en: $($_.FullName)"
+        Write-Host "Replacement at: $($_.FullName)"
     } else {
         # El patrón no coincidió
-        Write-Host "Sin coincidencias en: $($_.FullName)"
+        Write-Host "No matches at: $($_.FullName)"
     }
 }
 ```
 
-### Detect missing DBs
+## Detect missing DBs
 
 Write in a `missingDBs.txt` file a list of databases that are not exported. This issue happens in linked databases, databases that are not the original one but a view of the original
 
@@ -85,14 +85,14 @@ Write in a `missingDBs.txt` file a list of databases that are not exported. This
 Get-ChildItem -Recurse -Filter "Untitled Database.md" | ForEach-Object { $_.FullName } > missingDBs.txt
 ```
 
-### Formatting URLs
+## Formatting URLs
 
 > The URLs will be formatted, but the original URL will be keept in a comment in case of there is some issue with the resource path
 
 ```powershell
 Get-ChildItem -Recurse | Where-Object { $_.Extension -eq '.md' } | ForEach-Object {
     $archivo = $_.FullName
-    Write-Host "Procesando archivo: $archivo"
+    Write-Host "Processing files: $archivo"
     $contenido = Get-Content $archivo -Raw
     $contenido = $contenido -replace '(!?)\[(.+?)\]\(([^)]+)\)', '$1[[$2]] %% $3'
     Set-Content $archivo $contenido
@@ -115,127 +115,124 @@ foreach ($archivo in $archivos) {
     # Escribir el contenido actualizado en el archivo
     Set-Content $archivo.FullName -Value $contenidoActualizado
 
-    Write-Host "Expresión regular aplicada en: $($archivo.FullName)"
+    Write-Host "RegEx applied at: $($archivo.FullName)"
 }
 ```
 
-### Removing multiple `*`
+## Removing multiple `*`
 
 > Removes the duplicated `*` characters such as: "\*\*\*\*\*\*\*\*\*\*\***bold**\*\*\*\*\*\*\*\*\*\*\*\*\*"
 
 ```powershell
 Get-ChildItem -File -Recurse -Include *.md | ForEach-Object {
     $archivo = $_.FullName
-    Write-Host "Procesando archivo: $archivo"
+    Write-Host "Processing file: $archivo"
     $contenido = Get-Content $archivo -Raw
     $contenido = $contenido -replace '\*+\*([^\*]+)\*\*+', '**$1**'
     Set-Content $archivo $contenido
 }
 ```
 
-### Tablas/Listas
-
-Hacer la tabla donde exista un .csv
-	- La tabla se hace de los .md en la ruta del .csv y recursivo
-	- Los datos del .csv se deben añadir como atributos a cada pagina, cada entrada del .csv coincidirá con un .md 
+## Generate lists
 
 ```python
 import os, csv
 
-# Directorio raíz donde se realizará la búsqueda recursiva
-directorio_raiz = r"C:\Users\Porti\Desktop\CONVERT\Export-9f787dd1-7f28-4ead-9fa1-421bbef21fbf-Part-1\Export-9f787dd1-7f28-4ead-9fa1-421bbef21fbf\Software docs\Apps & Topics\Blender\Blender Concepts\Nodes\Nodes list"
+# Root directory where the recursive search will be performed
+root_directory = r"PATH/TO/FOLDER"
 
-# Lista para almacenar los archivos CSV encontrados
-archivos_csv = []
+# List to store the found CSV files
+csv_files = []
 
-# Recorrer los directorios, subdirectorios y archivos dentro del directorio raíz
-for directorio_actual, _, archivos in os.walk(directorio_raiz):
-    for archivo in archivos:
-        if archivo.endswith(".csv"):
-            # Si es un archivo CSV, agregarlo a la lista
-            ruta_csv = os.path.join(directorio_actual, archivo)
-            archivos_csv.append(ruta_csv)
+# Traverse the directories, subdirectories, and files within the root directory
+for current_dir, _, files in os.walk(root_directory):
+    for file in files:
+        if file.endswith(".csv"):
+            # If it's a CSV file, add it to the list
+            csv_path = os.path.join(current_dir, file)
+            csv_files.append(csv_path)
 
-# Recorrer los archivos CSV encontrados
-for archivo_csv in archivos_csv:
-    # Obtener el nombre base del archivo CSV sin la extensión
-    nombre_base = os.path.splitext(os.path.basename(archivo_csv))[0]
+# Traverse the found CSV files
+for csv_file in csv_files:
+    # Get the base name of the CSV file without extension
+    base_name = os.path.splitext(os.path.basename(csv_file))[0]
 
-    # Obtener los headers
-    with open(archivo_csv, "r") as f:
-        lector_csv = csv.reader(f)
-        primera_fila = next(lector_csv)
+    # Get the headers
+    with open(csv_file, "r") as f:
+        csv_reader = csv.reader(f)
+        first_row = next(csv_reader)
     
 
-    # Crear el archivo MD con el mismo nombre pero con extensión .md
-    archivo_md = archivo_csv.replace(".csv", ".md")
-    with open(archivo_md, "w") as f:
-        # Escribir el contenido deseado en el archivo MD
-        contenido = f"""```dataview
-TABLE {", ".join(primera_fila[1:])}
+    # Create the MD file with the same name but with .md extension
+    md_file = csv_file.replace(".csv", ".md")
+    with open(md_file, "w") as f:
+        # Write the desired content to the MD file
+        content = f"""```dataview
+TABLE {", ".join(first_row[1:])}
 FROM ""
-WHERE contains(file.path, "{nombre_base}/")
+WHERE contains(file.path, "{base_name}/")
 ```"""
-        f.write(contenido)
+        f.write(content)
 
-print("Archivos MD creados exitosamente!")
+print("MD Files created successfully!")
 
 ```
 
 
-### Añadir metadatos de los csv a los archivos
+## Add metadata of the files
 
 ```python
 import csv
 import os
 
-# Ruta del archivo CSV
-ruta_lista = r"RUTA/DE/LA/CARPETA"
-ruta_csv = os.path.join(ruta_lista, os.path.basename(ruta_lista) + ".csv")
+# Path to the CSV file
+lista_path = r"PATH/OF/THE/FOLDER"
+csv_path = os.path.join(lista_path, os.path.basename(lista_path) + ".csv")
 
-# Ruta del archivo de registro
-ruta_log = os.path.join(ruta_lista, "log_lista.txt")
+# Path to the log file
+log_path = os.path.join(lista_path, "log_lista.txt")
 
-# Leer el archivo CSV y agregar el contenido como atributos de Obsidian
-with open(ruta_csv, "r") as archivo_csv:
-    lector_csv = csv.reader(archivo_csv)
-    # Ignorar la primera fila (encabezados)
+# Read the CSV file and add the contents as Obsidian attributes
+with open(csv_path, "r") as csv_file:
+    csv_reader = csv.reader(csv_file)
+    # Ignore the first row (headers)
+    headers = next(csv_reader)[1:]
 
-    headers = next(lector_csv)[1:]
-    for fila in lector_csv:
-        # Obtener el nombre del archivo Markdown y el contenido de la fila
-        nombre_md = fila[0] + ".md"
+    for row in csv_reader:
+        # Get the name of the Markdown file and the contents of the row
+        md_name = row[0] + ".md"
 
-        # Ruta completa del archivo Markdown
-        ruta_md = os.path.join(ruta_lista, fila[0], nombre_md)
+        # Full path of the Markdown file
+        md_path = os.path.join(lista_path, row[0], md_name)
 
-        # Verificar si la ruta del archivo Markdown existe
-        if os.path.exists(ruta_md):
-            # Leer el contenido actual del archivo Markdown
-            with open(ruta_md, "r") as archivo_md:
-                lineas_md = archivo_md.readlines()
+        # Check if the Markdown file path exists
+        if os.path.exists(md_path):
+            # Read the current contents of the Markdown file
+            with open(md_path, "r") as md_file:
+                md_lines = md_file.readlines()
 
-            i = 2  # Línea 3
-            while i < len(lineas_md):
-                if not lineas_md[i].strip(): # Si la línea está vacía
-                    if i != 2: lineas_md[i-1] += '---\n'
+            i = 2  # Line 3
+            while i < len(md_lines):
+                if not md_lines[i].strip(): # If the line is empty
+                    if i != 2: md_lines[i-1] += '---\n'
                     break 
                     
-                if i == 2 and ":" in lineas_md[2] : lineas_md[1] += '---\n'
-                else: break  # Si no son metadataos 
+                if i == 2 and ":" in md_lines[2]: md_lines[1] += '---\n'
+                else: break  # If not metadata 
                 i += 1
 
-            # Escribir el contenido actualizado en el archivo Markdown
-            with open(ruta_md, "w") as archivo_md:
-                archivo_md.writelines(lineas_md)
+            # Write the updated contents to the Markdown file
+            with open(md_path, "w") as md_file:
+                md_file.writelines(md_lines)
 
-            print(f"Metadatos agregados en el archivo Markdown {nombre_md}")
+            print(f"Metadata added to the Markdown file {md_name}")
         else:
-            print(f"El archivo Markdown {nombre_md} no existe. Registrando en el archivo de log.")
-            # Registrar en el archivo de log
-            with open(ruta_log, "a") as archivo_log:
-                archivo_log.write(f"[Archivo no encontrado]: {ruta_md}")
+            print(f"The Markdown file {md_name} does not exist. Logging to the log file.")
+            # Log the error in the log file
+            with open(log_path, "a") as log_file:
+                log_file.write(f"[File not found]: {md_path}")
 
-print("Proceso completado exitosamente!")
-
+print("Process completed successfully!")
 ```
+
+
